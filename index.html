@@ -169,8 +169,8 @@ nav .fabw{flex:1;display:flex;justify-content:center}
 .amt span{font-size:26px;color:var(--mu)}
 .amt input{border:0;outline:0;font-size:34px;font-weight:700;width:100%;padding:4px 0;background:none}
 .amthint{font-size:12px;color:var(--mu);min-height:18px;margin-bottom:8px}
-.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
-.seg button{border:1px solid var(--bd);background:var(--card);border-radius:12px;padding:9px 4px;font-size:13px}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.seg button{border:1px solid var(--bd);background:var(--card);border-radius:12px;padding:8px 2px;font-size:12.5px;line-height:1.3}
 .seg button.on{background:var(--cc);color:#fff;border-color:var(--cc);font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.15)}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .fl{display:block;font-size:12px;color:var(--mu);margin:0 0 5px;font-weight:500}
@@ -261,7 +261,7 @@ ol.steps{padding-left:20px;margin:6px 0;font-size:13.5px;line-height:1.7}
    আমার হিসাব v2 — পার্সোনাল ফাইন্যান্স অ্যাপ (একক HTML ফাইল)
    ডেটা: localStorage (amar_hishab_v2) + ঐচ্ছিক Google Apps Script ক্লাউড সিঙ্ক
    ===================================================================== */
-const APP_VER = '2.1';
+const APP_VER = '2.2';
 const KEY = 'amar_hishab_v2', OLDKEY = 'amaz_personal_hisab_v1', LKEY = 'amar_hishab_local';
 const CATS = {
   inc:  {bn:'আয়',        ic:'💰', col:'#16a05a'},
@@ -269,11 +269,12 @@ const CATS = {
   bill: {bn:'বিল',        ic:'🧾', col:'#8a5cc2'},
   exp:  {bn:'খরচ',        ic:'🛒', col:'#e0892b'},
   debt: {bn:'ঋণ পরিশোধ', ic:'💳', col:'#d0463f'},
+  lin:  {bn:'ঋণ গ্রহণ',   ic:'🤝', col:'#0e8a8a'},
   trf:  {bn:'ট্রান্সফার',  ic:'🔁', col:'#56707c'}
 };
 const CK = ['inc','sav','bill','exp','debt'];   // হিসাবের ক্যাটাগরি
 const OUTC = ['sav','bill','exp','debt'];       // যেগুলোতে টাকা বের হয়
-const TYPES = CK.concat(['trf']);
+const TYPES = ['inc','exp','bill','sav','debt','lin','trf'];
 const MN = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
 const MS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const PAL = ['#e0892b','#8a5cc2','#2a7fb8','#16a05a','#d0463f','#c9a227','#3fb3a8','#e46aa0','#6c7ae0','#8d8d8d'];
@@ -286,6 +287,7 @@ const DEF_SUBS = {
   debt: ['পার্সোনাল লোন']
 };
 const CHANGELOG = [
+  {v:'2.2', d:'2026-09-28', items:['নতুন ধরন "ঋণ গ্রহণ" — ঋণ নিলে টাকা অ্যাকাউন্টে যোগ হয়, কিন্তু আয় হিসেবে ধরা হয় না','নতুন ঋণ যোগ করার সময়ই টাকা কোন অ্যাকাউন্টে এলো তা দেওয়া যায়','একই ঋণে পরে আরও টাকা নেওয়া যায় — বাকি নিজে থেকে বাড়ে','কিস্তি ঠিক না হওয়া ঋণ (যেমন আত্মীয়/বন্ধুর কাছ থেকে হাওলাত) রাখা যায়','মাসিক রিপোর্টে "(+) ঋণ গ্রহণ" লাইন']},
   {v:'2.1', d:'2026-09-28', items:['ইনস্টলযোগ্য অ্যাপ (PWA) — হোম স্ক্রিনে আইকন, ব্রাউজার বার ছাড়া ফুল স্ক্রিন','ইন্টারনেট ছাড়াও খোলে (অফলাইন ক্যাশ)','অ্যাপের ভেতরেই "ইনস্টল করুন" বাটন']},
   {v:'2.0', d:'2026-09-28', items:['প্রিমিয়াম নতুন ডিজাইন + ডার্ক মোড','অ্যাকাউন্ট/ওয়ালেট (নগদ, বিকাশ, ব্যাংক) ও ট্রান্সফার','পূর্ণাঙ্গ মাসিক রিপোর্ট — প্রারম্ভিক/সমাপনী ব্যালেন্স, খাতভিত্তিক বাজেট বনাম আসল, দৈনিক খরচ, ১২ মাসের ট্রেন্ড','রিপোর্ট প্রিন্ট/PDF ও শেয়ার','নির্দিষ্ট মাসিক লেনদেন (এক ট্যাপে যোগ)','স্মার্ট ইনসাইট','Google Drive ক্লাউড সিঙ্ক (Apps Script) + দৈনিক অটো ব্যাকআপ','PIN লক ও টাকা লুকানোর অপশন','টাকার ঘরে হিসাব করা যায় (যেমন 250+120)','অ্যাকাউন্ট ব্যালেন্স মিলিয়ে নেওয়ার টুল']},
   {v:'1.0', d:'2026-09-28', items:['প্রথম সংস্করণ — লেনদেন, বাজেট, সঞ্চয় লক্ষ্য, ঋণ ট্র্যাকার']}
@@ -410,12 +412,12 @@ const TITLES = {tx:'লেনদেন', rep:'মাসিক রিপোর্
 const accById = id => S.accs.find(a => a.id === id);
 const accName = id => { const a = accById(id); return a ? a.name : '—'; };
 function txOf(m){ return S.txns.filter(t => ymOf(t.d) === m); }
-function actual(m){ const r = {inc:0,sav:0,bill:0,exp:0,debt:0,trf:0}; txOf(m).forEach(t => { r[t.c] = (r[t.c]||0) + t.a; }); r.out = r.sav+r.bill+r.exp+r.debt; r.net = r.inc - r.out; return r; }
+function actual(m){ const r = {inc:0,sav:0,bill:0,exp:0,debt:0,trf:0,lin:0}; txOf(m).forEach(t => { r[t.c] = (r[t.c]||0) + t.a; }); r.out = r.sav+r.bill+r.exp+r.debt; r.net = r.inc - r.out; return r; }
 function planned(m){ const b = S.budget[m] || {}; const r = {}; CK.forEach(c => { r[c] = Object.values(b[c]||{}).reduce((x,y)=>x+(+y||0),0); }); r.out = r.sav+r.bill+r.exp+r.debt; r.net = r.inc - r.out; return r; }
 function accDelta(t, id){
   if(t.c === 'trf') return (t.to === id ? t.a : 0) - (t.acc === id ? t.a : 0);
   if(t.acc !== id) return 0;
-  return t.c === 'inc' ? t.a : -t.a;
+  return (t.c === 'inc' || t.c === 'lin') ? t.a : -t.a;
 }
 function accBal(id, before){ const A = accById(id); let b = A ? (+A.open||0) : 0; S.txns.forEach(t => { if(!before || t.d < before) b += accDelta(t, id); }); return b; }
 function totBal(before){ return S.accs.reduce((s,a) => s + accBal(a.id, before), 0); }
@@ -425,12 +427,13 @@ function subsWithData(c, m){
   Object.keys((S.budget[m]||{})[c]||{}).forEach(s => set.add(s));
   return [...set];
 }
-function ensureSub(c, name){ if(name && S.subs[c] && !S.subs[c].includes(name)){ S.subs[c].push(name); S.subsU = now(); } }
+const subList = c => c==='lin' ? S.subs.debt : (S.subs[c] || []);
+function ensureSub(c, name){ if(c==='lin') c = 'debt'; if(name && S.subs[c] && !S.subs[c].includes(name)){ S.subs[c].push(name); S.subsU = now(); } }
 function renameSub(c, o, n){
   const Ls = S.subs[c]; if(Ls.includes(n)){ toast('এই নাম আগে থেকেই আছে'); return false; }
   const i = Ls.indexOf(o); if(i>=0) Ls[i] = n; else Ls.push(n);
   const t0 = now(); S.subsU = t0;
-  S.txns.forEach(t => { if(t.c===c && t.s===o){ t.s = n; t.u = t0; } });
+  S.txns.forEach(t => { if((t.c===c || (c==='debt' && t.c==='lin')) && t.s===o){ t.s = n; t.u = t0; } });
   S.recs.forEach(r => { if(r.c===c && r.s===o){ r.s = n; r.u = t0; } });
   Object.values(S.budget).forEach(b => { if(b[c] && o in b[c]){ b[c][n] = b[c][o]; delete b[c][o]; b.u = t0; } });
   if(c==='sav') S.goals.forEach(g => { if(g.name===o){ g.name = n; g.u = t0; } });
@@ -445,24 +448,29 @@ function goalCalc(g){
   return {saved, left, pct: g.target>0 ? Math.min(1, saved/g.target) : 0, ml, done: ml!==null ? addM(ymOf(today()), ml) : null};
 }
 function loanCalc(Ln){
-  const r = (Ln.apr||0)/1200, tm = ymOf(today()), paid = {};
-  S.txns.forEach(t => { if(t.c==='debt' && t.s===Ln.name){ const m = ymOf(t.d); paid[m] = (paid[m]||0) + t.a; } });
-  let bal = Ln.principal, m = Ln.start, rows = [], cur = null, never = false;
-  for(let i=0; i<480; i++){
-    if(bal <= 0.005) break;
-    const open = bal, int = open*r, act = paid[m]||0; let pay;
+  const r = (Ln.apr||0)/1200, tm = ymOf(today()), paid = {}, got = {};
+  S.txns.forEach(t => { if(t.s!==Ln.name) return; const m = ymOf(t.d);
+    if(t.c==='debt') paid[m] = (paid[m]||0) + t.a; else if(t.c==='lin') got[m] = (got[m]||0) + t.a; });
+  const gm = Object.keys(got).sort(), lastB = gm.length ? gm[gm.length-1] : '';
+  const start = gm.length && gm[0] < Ln.start ? gm[0] : Ln.start;
+  const total = (+Ln.principal||0) + Object.values(got).reduce((a,b)=>a+b,0);
+  let bal = +Ln.principal||0, m = start, rows = [], cur = null, never = false;
+  for(let i=0; i<600; i++){
+    const add = got[m]||0, open = bal + add;
+    if(open <= 0.005){ if(m >= lastB && m >= tm){ bal = 0; break; } if(m >= lastB && !Object.keys(paid).some(k=>k>m)){ bal = 0; break; } bal = 0; m = addM(m,1); continue; }
+    const int = open*r, act = paid[m]||0; let pay;
     if(m < tm) pay = act;
-    else if(m === tm){ pay = act>0 ? act : Math.min(Ln.pay, open+int); cur = Math.max(0, act>0 ? open+int-act : open); }
-    else pay = Math.min(Ln.pay, open+int);
-    if(m >= tm && !act && Ln.pay <= int){ never = true; break; }
+    else if(m === tm){ pay = act>0 ? act : Math.min(Ln.pay||0, open+int); cur = Math.max(0, act>0 ? open+int-act : open); }
+    else pay = Math.min(Ln.pay||0, open+int);
+    if(m >= tm && !act && (Ln.pay||0) <= int + 0.001){ never = true; bal = open; break; }
     bal = Math.max(0, open + int - pay);
-    rows.push({m, plan:Ln.pay, act, bal, done:act>0});
+    rows.push({m, plan:Ln.pay||0, act, got:add, bal, done:act>0});
     m = addM(m,1);
   }
-  if(cur === null) cur = tm < Ln.start ? Ln.principal : (never ? bal : 0);
+  if(cur === null) cur = tm < start ? total : (never ? bal : bal);
   const totPaid = Object.values(paid).reduce((a,b)=>a+b,0);
   const payoff = (!never && rows.length && rows[rows.length-1].bal <= 0.005) ? rows[rows.length-1].m : null;
-  return {rows, cur, never, totPaid, payoff, pct: Ln.principal>0 ? Math.min(1, Math.max(0,(Ln.principal-cur)/Ln.principal)) : 0};
+  return {rows, cur, never, totPaid, payoff, total, pct: total>0 ? Math.min(1, Math.max(0,(total-cur)/total)) : 0};
 }
 function recDone(r, m){ return S.txns.some(t => t.rid === r.id && ymOf(t.d) === m); }
 function recDate(r, m){ return m + '-' + pad(Math.min(r.day||1, dim(m))); }
@@ -494,7 +502,7 @@ function countUp(){
   });
 }
 function txRow(t){
-  const C = CATS[t.c] || CATS.exp, inc = t.c==='inc', trf = t.c==='trf';
+  const C = CATS[t.c] || CATS.exp, inc = t.c==='inc' || t.c==='lin', trf = t.c==='trf';
   const sub = trf ? `${esc(accName(t.acc))} → ${esc(accName(t.to))}${t.n?' · '+esc(t.n):''}` : `${esc(accName(t.acc))}${t.n?' · '+esc(t.n):''}`;
   return `<div class="tx" data-tx="${t.id}"><div class="ti" style="background:${C.col}1f">${C.ic}</div>
   <div class="tm"><b>${trf ? 'ট্রান্সফার' : esc(t.s)}</b><small>${sub}</small></div>
@@ -627,6 +635,7 @@ function vRep(){
   <table class="stmt">
     <tr><td>মাসের শুরুতে ব্যালেন্স</td><td>${mv(R.open)}</td></tr>
     <tr><td>(+) মোট আয়</td><td class="pos">${mv(a.inc)}</td></tr>
+    ${a.lin?`<tr><td>(+) ঋণ গ্রহণ <small class="muted">(আয় নয়)</small></td><td>${mv(a.lin)}</td></tr>`:''}
     <tr><td>(−) সঞ্চয়ে জমা</td><td>${mv(a.sav)}</td></tr>
     <tr><td>(−) বিল পরিশোধ</td><td>${mv(a.bill)}</td></tr>
     <tr><td>(−) দৈনন্দিন খরচ</td><td>${mv(a.exp)}</td></tr>
@@ -658,7 +667,7 @@ function printReport(){
   const f = n => fmt(n).replace('৳ ','');
   $('#printArea').innerHTML = `<h1>মাসিক হিসাব বিবরণী</h1><div class="prs">${L.name?esc(L.name)+' · ':''}${mLabel(M)} · তৈরি: ${dLabel(today())}</div>
   <h2>সারসংক্ষেপ</h2><table>
-  <tr><td class="l">মাসের শুরুতে ব্যালেন্স</td><td>${f(R.open)}</td></tr><tr><td class="l">(+) মোট আয়</td><td>${f(a.inc)}</td></tr>
+  <tr><td class="l">মাসের শুরুতে ব্যালেন্স</td><td>${f(R.open)}</td></tr><tr><td class="l">(+) মোট আয়</td><td>${f(a.inc)}</td></tr>${a.lin?`<tr><td class="l">(+) ঋণ গ্রহণ</td><td>${f(a.lin)}</td></tr>`:''}
   <tr><td class="l">(−) সঞ্চয়ে জমা</td><td>${f(a.sav)}</td></tr><tr><td class="l">(−) বিল পরিশোধ</td><td>${f(a.bill)}</td></tr>
   <tr><td class="l">(−) দৈনন্দিন খরচ</td><td>${f(a.exp)}</td></tr><tr><td class="l">(−) ঋণ/কিস্তি পরিশোধ</td><td>${f(a.debt)}</td></tr>
   <tr class="tot"><td class="l">মাস শেষে ব্যালেন্স</td><td>${f(R.close)}</td></tr></table>
@@ -673,7 +682,7 @@ function printReport(){
 }
 function shareReport(){
   const R = repData(M), a = R.a;
-  const txt = `📊 ${mLabel(M)} — আমার হিসাব\n\nশুরুর ব্যালেন্স: ${fmt(R.open)}\n(+) আয়: ${fmt(a.inc)}\n(−) সঞ্চয়: ${fmt(a.sav)}\n(−) বিল: ${fmt(a.bill)}\n(−) খরচ: ${fmt(a.exp)}\n(−) ঋণ পরিশোধ: ${fmt(a.debt)}\n━━━━━━━━━━\nমাস শেষে ব্যালেন্স: ${fmt(R.close)}\nসঞ্চয়ের হার: ${a.inc>0?Math.round(a.sav/a.inc*100):0}%`;
+  const txt = `📊 ${mLabel(M)} — আমার হিসাব\n\nশুরুর ব্যালেন্স: ${fmt(R.open)}\n(+) আয়: ${fmt(a.inc)}${a.lin?'\n(+) ঋণ গ্রহণ: '+fmt(a.lin):''}\n(−) সঞ্চয়: ${fmt(a.sav)}\n(−) বিল: ${fmt(a.bill)}\n(−) খরচ: ${fmt(a.exp)}\n(−) ঋণ পরিশোধ: ${fmt(a.debt)}\n━━━━━━━━━━\nমাস শেষে ব্যালেন্স: ${fmt(R.close)}\nসঞ্চয়ের হার: ${a.inc>0?Math.round(a.sav/a.inc*100):0}%`;
   if(navigator.share) navigator.share({title:'মাসিক হিসাব', text:txt}).catch(()=>{});
   else copyText(txt, '📋 কপি হয়েছে — যেকোনো জায়গায় পেস্ট করুন');
 }
@@ -740,12 +749,13 @@ function vDebt(){
   <button class="addbig" data-act="loan">+ নতুন ঋণ যোগ করুন</button>
   ${Ls.length ? Ls.map(({Ln,k}) => `<div class="card"><div class="goal">${ring(k.pct, CATS.debt.col)}<div class="gd">
     <div class="ch" style="margin:0"><b>${esc(Ln.name)}</b><button class="edit" data-loan="${Ln.id}">এডিট</button></div>
-    <div class="kv"><span>বর্তমান বাকি</span><span class="neg">${mv(k.cur)}</span><span>শুরুর ব্যালেন্স</span><span>${mv(Ln.principal)}</span>
-    <span>মাসিক কিস্তি</span><span>${mv(Ln.pay)}</span><span>সুদ (বার্ষিক)</span><span>${Ln.apr||0}%</span>
+    <div class="kv"><span>বর্তমান বাকি</span><span class="neg">${mv(k.cur)}</span><span>মোট ঋণ নেওয়া</span><span>${mv(k.total)}</span>
+    <span>মাসিক কিস্তি</span><span>${Ln.pay?mv(Ln.pay):'ঠিক করা নেই'}</span><span>সুদ (বার্ষিক)</span><span>${Ln.apr||0}%</span>
     <span>মোট পরিশোধ</span><span class="pos">${mv(k.totPaid)}</span><span>শেষ হবে</span><span>${k.cur<=0?'🎉 শোধ!':k.payoff?mShort(k.payoff):'—'}</span></div></div></div>
-    ${k.never?'<div class="warn">⚠️ মাসিক কিস্তি সুদের চেয়ে কম বা সমান — এভাবে ঋণ কখনো শেষ হবে না। কিস্তি বাড়ান।</div>':''}
-    <details><summary>মাসভিত্তিক শিডিউল (${k.rows.length} মাস)</summary><table class="grid" style="margin-top:8px"><tr><th>মাস</th><th>কিস্তি</th><th>দিয়েছি</th><th>ব্যালেন্স</th></tr>
-    ${k.rows.map(r=>`<tr class="${r.m===tm?'now':''}"><td>${r.done?'✓ ':''}${mShort(r.m)}</td><td>${short(r.plan)}</td><td>${r.act?short(r.act):(r.m<tm?'<span class="neg">বাকি</span>':'—')}</td><td>${fmt(r.bal)}</td></tr>`).join('')}</table></details></div>`).join('')
+    ${k.never && !Ln.pay && k.cur>0 ? '<div class="warn">ℹ️ মাসিক কিস্তি ঠিক করা নেই — এডিট করে কিস্তি দিলে কবে শেষ হবে দেখাবে।</div>' : k.never?'<div class="warn">⚠️ মাসিক কিস্তি সুদের চেয়ে কম বা সমান — এভাবে ঋণ কখনো শেষ হবে না। কিস্তি বাড়ান।</div>':''}
+    <div class="btns" style="margin-top:10px"><button class="mini" data-lpay="${Ln.id}">💳 কিস্তি দিলাম</button><button class="mini" data-lin="${Ln.id}" style="background:#0e8a8a22;color:#0e8a8a">🤝 আরও ঋণ নিলাম</button></div>
+    <details><summary>মাসভিত্তিক শিডিউল (${k.rows.length} মাস)</summary><table class="grid" style="margin-top:8px"><tr><th>মাস</th><th>কিস্তি</th><th>দিয়েছি</th><th>বাকি</th></tr>
+    ${k.rows.map(r=>`<tr class="${r.m===tm?'now':''}"><td>${r.done?'✓ ':''}${mShort(r.m)}${r.got?' <small style="color:#0e8a8a">+'+short(r.got)+'</small>':''}</td><td>${short(r.plan)}</td><td>${r.act?short(r.act):(r.m<tm?'<span class="neg">বাকি</span>':'—')}</td><td>${fmt(r.bal)}</td></tr>`).join('')}</table></details></div>`).join('')
     : '<div class="card empty">কোনো ঋণ যোগ করা নেই।<br><small>ঋণের নামেই একটা "ঋণ পরিশোধ" খাত তৈরি হবে — সেই খাতে কিস্তি দিলে ব্যালেন্স নিজে থেকে কমবে।</small></div>'}`;
 }
 
@@ -823,6 +833,7 @@ function vGuide(){
   <li><b>সেভ + আরেকটা</b> চাপলে একসাথে অনেকগুলো লেনদেন লেখা যায়।</li>
   <li>ATM থেকে তুললে, বিকাশে ক্যাশ-ইন করলে বা ব্যাংকে রাখলে <b>ট্রান্সফার</b> ব্যবহার করুন — এটা আয়/খরচে ধরা হয় না।</li>
   <li><b>সঞ্চয়</b> (DPS, ব্যাংক, গোল্ড) খরচ নয় — আলাদা হিসাব হয়, সঞ্চয় লক্ষ্যে যোগ হয়।</li>
+  <li>ঋণ নিলে <b>ঋণ গ্রহণ</b> → টাকা কোন অ্যাকাউন্টে এলো → কার কাছ থেকে। এটা আয় নয়, তাই আয়ের হিসাব ঠিক থাকে, আর ঋণ ট্যাবে বাকি বাড়ে। (অথবা ঋণ ট্যাব → + নতুন ঋণ → "এখন ঋণ নিচ্ছি")</li>
   <li>কিস্তি দিলে <b>ঋণ পরিশোধ</b> → ঋণের নাম বাছুন — ঋণের ব্যালেন্স নিজে থেকে কমবে।</li>
   <li>প্রতি মাসে একই থাকে এমন লেনদেন <b>আরও → নির্দিষ্ট মাসিক</b>-এ রাখুন — হোমে এক ট্যাপে যোগ হবে।</li>
   <li>মাস শেষে <b>রিপোর্ট</b> ট্যাবে পুরো মাসের হিসাব বিবরণী দেখুন, প্রিন্ট/PDF করুন।</li>
@@ -912,8 +923,8 @@ function head(t){ return `<div class="shead"><h2>${t}</h2><button class="x" data
 
 /* ---- লেনদেন ফর্ম ---- */
 function defDate(){ return M===ymOf(today()) ? today() : M+'-01'; }
-function txForm(t, preset){
-  const e = t || {d:defDate(), a:'', c:preset||'exp', s:'', n:'', acc:L.lastAcc||'cash', to:''};
+function txForm(t, preset, psub){
+  const e = t || {d:defDate(), a:'', c:preset||'exp', s:psub||'', n:'', acc:L.lastAcc||'cash', to:''};
   let c = e.c, s = e.s, acc = accById(e.acc) ? e.acc : S.accs[0].id, to = e.to || '', sq = '';
   const other = id => (S.accs.find(a=>a.id!==id)||{}).id || '';
   if(c==='trf' && (!to || to===acc)) to = other(acc);
@@ -925,12 +936,12 @@ function txForm(t, preset){
   <div class="btns">${t?'<button class="btn del" id="fDel">মুছুন</button>':'<button class="btn" id="fMore">সেভ + আরেকটা</button>'}<button class="btn pri" id="fSave">সেভ</button></div>`);
   const accChips = (sel, attr, skip) => S.accs.filter(a => a.id!==skip).map(a => `<button type="button" class="chip ${a.id===sel?'on':''}" data-${attr}="${a.id}">${a.ic} ${esc(a.name)}</button>`).join('');
   const drawSubs = () => { const box = sh.querySelector('#fS'); if(!box) return; const q = sq.toLowerCase();
-    box.innerHTML = S.subs[c].filter(x => !q || x.toLowerCase().includes(q)).map(x => `<button type="button" class="chip ${x===s?'on':''}" data-s="${esc(x)}">${esc(x)}</button>`).join('') + '<button type="button" class="chip add" data-new="1">+ নতুন খাত</button>'; };
+    box.innerHTML = subList(c).filter(x => !q || x.toLowerCase().includes(q)).map(x => `<button type="button" class="chip ${x===s?'on':''}" data-s="${esc(x)}">${esc(x)}</button>`).join('') + '<button type="button" class="chip add" data-new="1">+ নতুন খাত</button>'; };
   const drawBody = () => {
     const B = sh.querySelector('#fB');
     if(c==='trf'){ B.innerHTML = `<label class="fl">কোথা থেকে</label><div class="chips">${accChips(acc,'from')}</div><label class="fl">কোথায়</label><div class="chips">${accChips(to,'to',acc)}</div>`; }
-    else { B.innerHTML = `<label class="fl">${c==='inc'?'কোন অ্যাকাউন্টে এলো':'কোন অ্যাকাউন্ট থেকে গেল'}</label><div class="chips">${accChips(acc,'acc')}</div>
-      <label class="fl">খাত</label>${S.subs[c].length>9?`<input class="fi sm" id="fSq" placeholder="🔍 খাত খুঁজুন" value="${esc(sq)}">`:''}<div class="chips" id="fS"></div>`; drawSubs(); }
+    else { B.innerHTML = `<label class="fl">${c==='inc'||c==='lin'?'কোন অ্যাকাউন্টে এলো':'কোন অ্যাকাউন্ট থেকে গেল'}</label><div class="chips">${accChips(acc,'acc')}</div>
+      <label class="fl">${c==='lin'?'কোন ঋণ / কার কাছ থেকে':'খাত'}</label>${subList(c).length>9?`<input class="fi sm" id="fSq" placeholder="🔍 খাত খুঁজুন" value="${esc(sq)}">`:''}<div class="chips" id="fS"></div>`; drawSubs(); }
   };
   drawBody();
   const aIn = sh.querySelector('#fA');
@@ -939,12 +950,12 @@ function txForm(t, preset){
   sh.addEventListener('input', ev => { if(ev.target.id==='fSq'){ sq = ev.target.value; drawSubs(); } });
   sh.addEventListener('click', ev => {
     const b = ev.target.closest('button'); if(!b) return; const D = b.dataset;
-    if(D.c){ c = D.c; if(c!=='trf' && !S.subs[c].includes(s)) s = ''; if(c==='trf' && (!to || to===acc)) to = other(acc); sq = '';
+    if(D.c){ c = D.c; if(c!=='trf' && !subList(c).includes(s)) s = ''; if(c==='trf' && (!to || to===acc)) to = other(acc); sq = '';
       sh.querySelectorAll('#fC button').forEach(x => x.classList.toggle('on', x===b)); drawBody(); }
     else if(D.acc){ acc = D.acc; drawBody(); }
     else if(D.from){ acc = D.from; if(to===acc) to = other(acc); drawBody(); }
     else if(D.to){ to = D.to; drawBody(); }
-    else if(D.new){ const n = (prompt('নতুন খাতের নাম:')||'').trim(); if(!n) return; ensureSub(c,n); saveLocal(); s = n; sq = ''; drawBody(); }
+    else if(D.new){ const n = (prompt(c==='lin' ? 'ঋণের নাম / কার কাছ থেকে নিলেন:' : 'নতুন খাতের নাম:')||'').trim(); if(!n) return; ensureSub(c,n); saveLocal(); s = n; sq = ''; drawBody(); }
     else if(D.s !== undefined){ s = D.s; drawSubs(); }
   });
   const doSave = more => {
@@ -957,6 +968,7 @@ function txForm(t, preset){
     if(c==='trf') rec.to = to;
     if(t && t.rid) rec.rid = t.rid;
     if(t) S.txns[S.txns.findIndex(x=>x.id===t.id)] = rec; else S.txns.push(rec);
+    if(c==='lin' && !S.loans.some(l => l.name===s)){ S.loans.push({id:uid(), name:s, principal:0, apr:0, pay:0, start:ymOf(d), u:now()}); setTimeout(() => toast('💳 ঋণ ট্যাবে কিস্তি ও সুদ সেট করে নিন'), 1600); }
     if(c!=='trf'){ L.lastAcc = acc; saveL(); }
     save(); buzz(); M = ymOf(d); toast('✅ সেভ হয়েছে'); render();
     if(more){ txForm(null, c); const nf = $('#ov .sheet'); nf.querySelector('#fD').value = d; } else closeSheet(true);
@@ -990,22 +1002,53 @@ function goalForm(g){
 }
 /* ---- ঋণ ফর্ম ---- */
 function loanForm(Ln){
+  const isNew = !Ln; let mode = 'new', acc = accById(L.lastAcc) ? L.lastAcc : S.accs[0].id;
   const e = Ln || {name:'', principal:'', apr:'', pay:'', start: ymOf(today())};
+  const got = Ln ? S.txns.filter(t => t.c==='lin' && t.s===Ln.name).reduce((a,t)=>a+t.a,0) : 0;
   const sh = openSheet(`${head(Ln?'✏️ ঋণ এডিট':'💳 নতুন ঋণ')}
-  <label class="fl">ঋণের নাম (এই নামে পরিশোধ খাত হবে)</label><input class="fi" id="lN" value="${esc(e.name)}" placeholder="যেমন: পার্সোনাল লোন / ফ্রিজ কিস্তি">
-  <div class="row2"><div><label class="fl">শুরুর মাস</label><input class="fi" type="month" id="lSt" value="${e.start}"></div>
-  <div><label class="fl">তখন বাকি ছিল (৳)</label><input class="fi" id="lP" inputmode="decimal" value="${e.principal||''}"></div></div>
-  <div class="row2"><div><label class="fl">বার্ষিক সুদ (%)</label><input class="fi" id="lR" inputmode="decimal" value="${e.apr||''}" placeholder="0"></div>
-  <div><label class="fl">মাসিক কিস্তি (৳)</label><input class="fi" id="lM" inputmode="decimal" value="${e.pay||''}"></div></div>
-  <div class="note">টিপস: কিস্তি দিলে "ঋণ পরিশোধ" ধরনে এই ঋণের নাম বেছে লেনদেন যোগ করুন — ব্যালেন্স নিজে থেকে কমবে। মাসিক কিস্তি "নির্দিষ্ট মাসিক লেনদেন"-এও রাখতে পারেন।</div>
+  ${isNew ? `<div class="segs" id="lMode" style="margin-bottom:12px"><button type="button" data-mode="new" class="on">🤝 এখন ঋণ নিচ্ছি</button><button type="button" data-mode="old">📜 আগের চলমান ঋণ</button></div>` : ''}
+  <label class="fl">ঋণের নাম / কার কাছ থেকে</label><input class="fi" id="lN" value="${esc(e.name)}" placeholder="যেমন: ব্র্যাক ব্যাংক লোন / রহিম ভাই / ফ্রিজ কিস্তি">
+  <div id="lNew" style="${isNew?'':'display:none'}">
+    <div class="row2"><div><label class="fl">কত টাকা নিলেন</label><input class="fi" id="lA" inputmode="decimal" placeholder="0"></div>
+    <div><label class="fl">তারিখ</label><input class="fi" type="date" id="lD" value="${today()}"></div></div>
+    <label class="fl">টাকা কোন অ্যাকাউন্টে এলো</label><div class="chips" id="lAcc"></div>
+  </div>
+  <div id="lOld" style="${isNew?'display:none':''}">
+    <div class="row2"><div><label class="fl">শুরুর মাস</label><input class="fi" type="month" id="lSt" value="${e.start}"></div>
+    <div><label class="fl">${isNew?'তখন বাকি ছিল (৳)':'অ্যাপের আগের বাকি (৳)'}</label><input class="fi" id="lP" inputmode="decimal" value="${e.principal||''}" placeholder="0"></div></div>
+    ${got ? `<div class="note" style="margin:-4px 0 10px">এছাড়া লেনদেন থেকে এই ঋণে নেওয়া হয়েছে: <b>${fmt(got)}</b></div>` : ''}
+  </div>
+  <div class="row2"><div><label class="fl">বার্ষিক সুদ (%)</label><input class="fi" id="lR" inputmode="decimal" value="${e.apr||''}" placeholder="0 = সুদ নেই"></div>
+  <div><label class="fl">মাসিক কিস্তি (৳)</label><input class="fi" id="lM" inputmode="decimal" value="${e.pay||''}" placeholder="0 = ঠিক হয়নি"></div></div>
+  <div class="note" id="lNote"></div>
   <div class="btns">${Ln?'<button class="btn del" id="lDel">মুছুন</button>':''}<button class="btn pri" id="lSave">সেভ</button></div>`);
+  const drawAcc = () => { sh.querySelector('#lAcc').innerHTML = S.accs.map(a => `<button type="button" class="chip ${a.id===acc?'on':''}" data-acc="${a.id}">${a.ic} ${esc(a.name)}</button>`).join(''); };
+  const drawNote = () => { sh.querySelector('#lNote').innerHTML = mode==='new' && isNew
+    ? 'টাকাটা বেছে নেওয়া অ্যাকাউন্টে যোগ হবে, কিন্তু <b>আয় হিসেবে ধরা হবে না</b>। পরে কিস্তি দিলে "ঋণ পরিশোধ"-এ এই ঋণের নাম বাছবেন।'
+    : 'অ্যাপ ব্যবহার শুরুর আগে থেকেই চলছে এমন ঋণ — এখন যত বাকি আছে সেটা লিখুন। এতে কোনো অ্যাকাউন্টে টাকা যোগ হবে না।'; };
+  drawAcc(); drawNote();
+  sh.addEventListener('click', ev => { const b = ev.target.closest('button'); if(!b) return;
+    if(b.dataset.acc){ acc = b.dataset.acc; drawAcc(); }
+    else if(b.dataset.mode){ mode = b.dataset.mode; sh.querySelectorAll('#lMode button').forEach(x=>x.classList.toggle('on', x===b));
+      sh.querySelector('#lNew').style.display = mode==='new' ? '' : 'none'; sh.querySelector('#lOld').style.display = mode==='old' ? '' : 'none'; drawNote(); } });
   sh.querySelector('#lSave').onclick = () => {
-    const name = sh.querySelector('#lN').value.trim(), principal = num(sh.querySelector('#lP').value), pay = num(sh.querySelector('#lM').value), start = sh.querySelector('#lSt').value;
-    if(!name){ toast('নাম লিখুন'); return; } if(principal<=0){ toast('বাকি টাকার পরিমাণ লিখুন'); return; } if(pay<=0){ toast('মাসিক কিস্তি লিখুন'); return; }
+    const name = sh.querySelector('#lN').value.trim(), apr = num(sh.querySelector('#lR').value), pay = num(sh.querySelector('#lM').value);
+    if(!name){ toast('ঋণের নাম লিখুন'); return; }
+    if(S.loans.some(x => x.name===name && (!Ln || x.id!==Ln.id))){ toast('এই নামে ঋণ আছে — সেটার কার্ডে "আরও ঋণ নিলাম" চাপুন'); return; }
+    if(isNew && mode==='new'){
+      const a = evalAmt(sh.querySelector('#lA').value), d = sh.querySelector('#lD').value;
+      if(!(a>0)){ toast('কত টাকা নিলেন লিখুন'); return; }
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(d)){ toast('তারিখ দিন'); return; }
+      ensureSub('debt', name); const t0 = now();
+      S.loans.push({id:uid(), name, principal:0, apr, pay, start:ymOf(d), u:t0});
+      S.txns.push({id:uid(), d, a:r2(a), c:'lin', s:name, n:'ঋণ গ্রহণ', acc, u:t0});
+      save(); buzz(); closeSheet(true); render(); toast(`✅ ${fmt(a)} ${accName(acc)}-এ যোগ হয়েছে`); return;
+    }
+    const principal = num(sh.querySelector('#lP').value), start = sh.querySelector('#lSt').value;
+    if(isNew && principal<=0){ toast('এখন কত বাকি আছে লিখুন'); return; }
     if(!/^\d{4}-\d{2}$/.test(start)){ toast('শুরুর মাস দিন'); return; }
-    if(S.loans.some(x => x.name===name && (!Ln || x.id!==Ln.id))){ toast('এই নামে ঋণ আছে'); return; }
     if(Ln && Ln.name!==name && !S.subs.debt.includes(name) && !renameSub('debt', Ln.name, name)) return;
-    const rec = {id: Ln ? Ln.id : uid(), name, principal, apr:num(sh.querySelector('#lR').value), pay, start, u:now()};
+    const rec = {id: Ln ? Ln.id : uid(), name, principal, apr, pay, start, u:now()};
     ensureSub('debt', name);
     if(Ln) S.loans[S.loans.findIndex(x=>x.id===Ln.id)] = rec; else S.loans.push(rec);
     save(); closeSheet(true); render(); toast('✅ সেভ হয়েছে');
@@ -1266,7 +1309,7 @@ $('#btnSet').onclick = () => go('set');
 $('#btnSync').onclick = () => go('sync');
 $('#nav').onclick = e => { const b = e.target.closest('button[data-tab]'); if(!b) return; if(b.dataset.tab==='more') menuSheet(); else go(b.dataset.tab); };
 $('#view').addEventListener('click', e => {
-  const t = e.target.closest('[data-tx],[data-go],[data-act],[data-goal],[data-loan],[data-addsub],[data-f],[data-fa],[data-new],[data-recadd],[data-recedit],[data-accedit],[data-accfix],[data-theme],[data-sc],[data-ren],[data-dsub]');
+  const t = e.target.closest('[data-tx],[data-go],[data-act],[data-goal],[data-loan],[data-addsub],[data-f],[data-fa],[data-new],[data-recadd],[data-recedit],[data-accedit],[data-accfix],[data-theme],[data-sc],[data-ren],[data-dsub],[data-lin],[data-lpay]');
   if(!t) return; const D = t.dataset;
   if(D.tx){ const x = S.txns.find(y=>y.id===D.tx); if(x) txForm(x); }
   else if(D.go) go(D.go);
@@ -1277,6 +1320,8 @@ $('#view').addEventListener('click', e => {
   else if(D.loan) loanForm(S.loans.find(l=>l.id===D.loan));
   else if(D.accedit) accForm(accById(D.accedit));
   else if(D.accfix) accFix(D.accfix);
+  else if(D.lin){ const l = S.loans.find(x=>x.id===D.lin); if(l) txForm(null, 'lin', l.name); }
+  else if(D.lpay){ const l = S.loans.find(x=>x.id===D.lpay); if(l){ txForm(null, 'debt', l.name); if(l.pay) setTimeout(() => { const a = $('#fA'); if(a && !a.value){ a.value = l.pay; } }, 50); } }
   else if(D.recedit) recForm(S.recs.find(r=>r.id===D.recedit));
   else if(D.recadd){ const r = S.recs.find(x=>x.id===D.recadd); if(r && !recDone(r,M)){ addRecTx(r,M); save(); buzz(); render(); toast('✅ যোগ হয়েছে'); } }
   else if(D.addsub){ const c = D.addsub, n = (prompt('নতুন খাতের নাম:')||'').trim(); if(!n) return; if(S.subs[c].includes(n)){ toast('আগে থেকেই আছে'); return; } ensureSub(c,n); save(); render(); }

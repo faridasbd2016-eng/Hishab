@@ -121,6 +121,18 @@ canvas{width:100%;display:block}
 .bhead{display:grid;grid-template-columns:1fr 96px 88px;gap:8px;font-size:11px;color:var(--mu);text-align:right}
 .bhead span:first-child{text-align:left}
 .over{color:var(--red)}
+.hl{cursor:pointer}
+.hl .hn,.bn.hl{text-decoration:underline dotted var(--mu);text-underline-offset:3px}
+.hbars{display:flex;gap:6px;align-items:flex-end;height:110px;margin:6px 0 4px}
+.hbars button{flex:1;border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:10px;color:var(--mu);gap:3px}
+.hbars i{display:block;width:70%;min-height:3px;border-radius:6px 6px 2px 2px;background:var(--act);opacity:.55}
+.hbars button.on i{opacity:1;background:var(--g3)}
+.hbars button.on{color:var(--tx);font-weight:700}
+.hrow2{display:flex;gap:10px;padding:10px 2px;border-bottom:1px solid var(--bd);cursor:pointer}
+.hrow2:last-child{border-bottom:0}
+.hrow2 .hd{flex:none;width:44px;text-align:center;background:var(--soft);border-radius:12px;padding:4px 0;line-height:1.1}
+.hrow2 .hd b{display:block;font-size:17px}.hrow2 .hd small{font-size:10px;color:var(--mu)}
+.hrow2 .hm{flex:1;min-width:0}.hrow2 .hm b{display:block;font-weight:600;overflow-wrap:anywhere}.hrow2 .hm small{color:var(--mu);font-size:12px}
 /* ================= রিপোর্ট ================= */
 .stmt{width:100%;border-collapse:collapse;font-size:14px}
 .stmt td{padding:8px 2px;border-bottom:1px solid var(--bd)}
@@ -261,7 +273,7 @@ ol.steps{padding-left:20px;margin:6px 0;font-size:13.5px;line-height:1.7}
    আমার হিসাব v2 — পার্সোনাল ফাইন্যান্স অ্যাপ (একক HTML ফাইল)
    ডেটা: localStorage (amar_hishab_v2) + ঐচ্ছিক Google Apps Script ক্লাউড সিঙ্ক
    ===================================================================== */
-const APP_VER = '2.2';
+const APP_VER = '2.4';
 const KEY = 'amar_hishab_v2', OLDKEY = 'amaz_personal_hisab_v1', LKEY = 'amar_hishab_local';
 const CATS = {
   inc:  {bn:'আয়',        ic:'💰', col:'#16a05a'},
@@ -287,6 +299,8 @@ const DEF_SUBS = {
   debt: ['পার্সোনাল লোন']
 };
 const CHANGELOG = [
+  {v:'2.4', d:'2026-09-28', items:['খাতভিত্তিক বিস্তারিত — যেকোনো খাতে (যেমন বাজার-সদাই) চাপ দিলে মাসের তারিখভিত্তিক সব কেনাকাটা, নোট, মোট, বাজেট, গড় ও ৬ মাসের তুলনা','হোম, বাজেট ও রিপোর্ট — সব জায়গা থেকে খাতে চাপ দেওয়া যায়','লেনদেন ট্যাবে "খাত অনুযায়ী" সারাংশ']},
+  {v:'2.3', d:'2026-09-28', items:['ক্লাউড সিঙ্ক সেটআপ সহজ: Secret Key নিজে থেকে তৈরি হয়, URL এক ট্যাপে পেস্ট','Apps Script কোড কপি না হলে শেয়ার/ডাউনলোড/দেখে কপি করার অপশন','সিঙ্ক চলার সময় লেখার ঘর থেকে ফোকাস সরে যাওয়ার সমস্যা ঠিক করা হয়েছে']},
   {v:'2.2', d:'2026-09-28', items:['নতুন ধরন "ঋণ গ্রহণ" — ঋণ নিলে টাকা অ্যাকাউন্টে যোগ হয়, কিন্তু আয় হিসেবে ধরা হয় না','নতুন ঋণ যোগ করার সময়ই টাকা কোন অ্যাকাউন্টে এলো তা দেওয়া যায়','একই ঋণে পরে আরও টাকা নেওয়া যায় — বাকি নিজে থেকে বাড়ে','কিস্তি ঠিক না হওয়া ঋণ (যেমন আত্মীয়/বন্ধুর কাছ থেকে হাওলাত) রাখা যায়','মাসিক রিপোর্টে "(+) ঋণ গ্রহণ" লাইন']},
   {v:'2.1', d:'2026-09-28', items:['ইনস্টলযোগ্য অ্যাপ (PWA) — হোম স্ক্রিনে আইকন, ব্রাউজার বার ছাড়া ফুল স্ক্রিন','ইন্টারনেট ছাড়াও খোলে (অফলাইন ক্যাশ)','অ্যাপের ভেতরেই "ইনস্টল করুন" বাটন']},
   {v:'2.0', d:'2026-09-28', items:['প্রিমিয়াম নতুন ডিজাইন + ডার্ক মোড','অ্যাকাউন্ট/ওয়ালেট (নগদ, বিকাশ, ব্যাংক) ও ট্রান্সফার','পূর্ণাঙ্গ মাসিক রিপোর্ট — প্রারম্ভিক/সমাপনী ব্যালেন্স, খাতভিত্তিক বাজেট বনাম আসল, দৈনিক খরচ, ১২ মাসের ট্রেন্ড','রিপোর্ট প্রিন্ট/PDF ও শেয়ার','নির্দিষ্ট মাসিক লেনদেন (এক ট্যাপে যোগ)','স্মার্ট ইনসাইট','Google Drive ক্লাউড সিঙ্ক (Apps Script) + দৈনিক অটো ব্যাকআপ','PIN লক ও টাকা লুকানোর অপশন','টাকার ঘরে হিসাব করা যায় (যেমন 250+120)','অ্যাকাউন্ট ব্যালেন্স মিলিয়ে নেওয়ার টুল']},
@@ -554,7 +568,7 @@ function vDash(){
   ${ins.length ? `<div class="card"><h3>💡 ইনসাইট</h3>${ins.map(x=>`<div class="ins"><i>${x[0]}</i><div>${x[1]}</div></div>`).join('')}</div>` : ''}
   <div class="card"><h3>📊 পরিকল্পনা বনাম আসল</h3><canvas id="cBar" data-h="210"></canvas>
     <div class="legend"><span><i style="background:var(--plan)"></i>পরিকল্পনা</span><span><i style="background:var(--act)"></i>আসল</span></div></div>
-  <div class="card"><h3>🍩 টাকা কোথায় গেল <small>বিল + খরচ</small></h3><canvas id="cDonut" data-h="200"></canvas><div class="dleg" id="dLeg"></div></div>
+  <div class="card"><h3>🍩 টাকা কোথায় গেল <small>খাতে চাপ দিন</small></h3><canvas id="cDonut" data-h="200"></canvas><div class="dleg" id="dLeg"></div></div>
   <div class="card"><h3>🕘 সাম্প্রতিক লেনদেন</h3>${recent.length ? recent.map(txRow).join('') : '<div class="empty">এই মাসে কোনো লেনদেন নেই</div>'}
     ${recent.length ? '<button class="link" data-go="tx">সব দেখুন →</button>' : ''}</div>`;
 }
@@ -574,8 +588,8 @@ function insights(m){
   return out;
 }
 function donutItems(m){
-  const map = {}; txOf(m).forEach(t => { if(t.c==='bill'||t.c==='exp') map[t.s] = (map[t.s]||0) + t.a; });
-  let it = Object.entries(map).map(([k,v]) => ({l:k, v})).sort((a,b)=>b.v-a.v);
+  const map = {}; txOf(m).forEach(t => { if(t.c==='bill'||t.c==='exp'){ const k = t.c+'\u0001'+t.s; map[k] = (map[k]||0) + t.a; } });
+  let it = Object.entries(map).map(([k,v]) => ({c:k.split('\u0001')[0], l:k.split('\u0001')[1], v})).sort((a,b)=>b.v-a.v);
   if(it.length > 8){ const rest = it.slice(7).reduce((a,b)=>a+b.v,0); it = it.slice(0,7).concat([{l:'অন্যান্য', v:rest}]); }
   return it.map((x,i) => ({...x, col:PAL[i%PAL.length]}));
 }
@@ -604,7 +618,10 @@ function drawTxList(){
     (!q || (t.s+' '+(t.n||'')+' '+t.a+' '+accName(t.acc)).toLowerCase().includes(q))));
   const inn = list.filter(t=>t.c==='inc').reduce((a,t)=>a+t.a,0), out = list.filter(t=>OUTC.includes(t.c)).reduce((a,t)=>a+t.a,0);
   const g = {}; list.forEach(t => (g[t.d] = g[t.d] || []).push(t));
-  $('#txList').innerHTML = `<div class="sumline"><span>আয়<br><b class="pos">${mv(inn)}</b></span><span>ব্যয়<br><b class="neg">${mv(out)}</b></span><span>${list.length}টি</span></div>` +
+  let heads = '';
+  if(fCat!=='all' && fCat!=='trf' && list.length){ const hm = {}; list.forEach(t => { hm[t.s] = (hm[t.s]||0) + t.a; });
+    heads = `<div class="card" style="padding:10px 14px"><h3 style="margin-bottom:4px">🏷️ খাত অনুযায়ী <small>চাপ দিন</small></h3><div class="dleg" style="margin-top:4px">${Object.entries(hm).sort((a,b)=>b[1]-a[1]).map(([k,v]) => `<div class="hl" data-head="${fCat}" data-hs="${esc(k)}"><span class="hn">${esc(k)}</span><span>${mv(v)}</span></div>`).join('')}</div></div>`; }
+  $('#txList').innerHTML = heads + `<div class="sumline"><span>আয়<br><b class="pos">${mv(inn)}</b></span><span>ব্যয়<br><b class="neg">${mv(out)}</b></span><span>${list.length}টি</span></div>` +
     (list.length ? '<div class="card" style="padding-top:2px">' + Object.keys(g).sort().reverse().map(d => {
       const dn = g[d].reduce((s,t)=> s + (t.c==='inc'?t.a:OUTC.includes(t.c)?-t.a:0), 0);
       return `<div class="dh"><span>${dLong(d)}</span><span class="${dn<0?'neg':'pos'}">${mv(dn)}</span></div>` + g[d].map(txRow).join('');
@@ -653,8 +670,8 @@ function vRep(){
   <div class="card"><h3>📋 খাতভিত্তিক — বাজেট বনাম আসল</h3>
   <table class="grid"><tr><th>খাত</th><th>পরিকল্পনা</th><th>আসল</th><th>পার্থক্য</th></tr>
   ${R.cats.map(k => `<tr class="cat"><td>${CATS[k.c].ic} ${CATS[k.c].bn}</td><td>${mv(k.p)}</td><td>${mv(k.a)}</td>${diffCell(k.c,k.p,k.a)}</tr>` +
-    (k.rows.length ? k.rows.map(r => `<tr><td>&nbsp;&nbsp;${esc(r.s)}</td><td>${r.p?mv(r.p):'—'}</td><td>${mv(r.a)}</td>${diffCell(k.c,r.p,r.a)}</tr>`).join('') : '<tr><td class="muted" colspan="4">&nbsp;&nbsp;কিছু নেই</td></tr>')).join('')}
-  </table><div class="note" style="margin-top:6px">পার্থক্য: <span class="pos">+</span> মানে ভালো (আয় বেশি / খরচ কম), <span class="neg">−</span> মানে বাজেটের বাইরে।</div></div>
+    (k.rows.length ? k.rows.map(r => `<tr class="hl" data-head="${k.c}" data-hs="${esc(r.s)}"><td>&nbsp;&nbsp;<span class="hn">${esc(r.s)}</span></td><td>${r.p?mv(r.p):'—'}</td><td>${mv(r.a)}</td>${diffCell(k.c,r.p,r.a)}</tr>`).join('') : '<tr><td class="muted" colspan="4">&nbsp;&nbsp;কিছু নেই</td></tr>')).join('')}
+  </table><div class="note" style="margin-top:6px">👆 খাতের নামে চাপ দিলে তারিখভিত্তিক বিস্তারিত দেখবেন। পার্থক্য: <span class="pos">+</span> মানে ভালো (আয় বেশি / খরচ কম), <span class="neg">−</span> মানে বাজেটের বাইরে।</div></div>
   <div class="card"><h3>👛 অ্যাকাউন্ট অনুযায়ী</h3>
   <table class="grid"><tr><th>অ্যাকাউন্ট</th><th>শুরু</th><th>এসেছে</th><th>গেছে</th><th>শেষ</th></tr>
   ${R.accs.map(x => `<tr><td>${x.ac.ic} ${esc(x.ac.name)}</td><td>${short(x.open)}</td><td class="pos">${short(x.inn)}</td><td class="neg">${short(x.out)}</td><td><b>${short(x.close)}</b></td></tr>`).join('')}
@@ -695,7 +712,7 @@ function vBud(){
     const rows = subsWithData(c, M).map(s => {
       const pl = (b[c]||{})[s] || 0, ac = act[s] || 0;
       const pct = pl>0 ? Math.min(100, ac/pl*100) : (ac>0?100:0), bad = c!=='inc' && pl>0 && ac>pl;
-      return `<div class="brow"><div class="bn">${esc(s)}</div><input class="bin" inputmode="decimal" data-c="${c}" data-s="${esc(s)}" value="${pl||''}" placeholder="0">
+      return `<div class="brow"><div class="bn hl" data-head="${c}" data-hs="${esc(s)}">${esc(s)}</div><input class="bin" inputmode="decimal" data-c="${c}" data-s="${esc(s)}" value="${pl||''}" placeholder="0">
       <div class="ba ${bad?'over':''}">${mv(ac)}</div><div class="bar"><i style="width:${pct}%;background:${bad?'var(--red)':CATS[c].col}"></i></div></div>`;
     }).join('');
     return `<div class="card"><div class="ch"><span>${CATS[c].ic} ${CATS[c].bn}</span><small>${fmt(a[c])} / ${fmt(p[c])}</small></div>
@@ -779,32 +796,39 @@ function vRecs(){
   : '<div class="empty">কিছু যোগ করা নেই</div>'}`;
 }
 /* ---------- ক্লাউড সিঙ্ক ---------- */
+function syncLabel(){ return {ok:'সিঙ্ক হয়েছে', busy:'সিঙ্ক হচ্ছে...', err:'সমস্যা হয়েছে', off:'অফলাইন', idle:'চালু'}[syncState] || 'চালু'; }
+function syncStatHTML(){
+  const on = !!(L.sync.url && L.sync.key);
+  return `<div class="ch"><span><span class="sdot ${on?syncState:''}"></span> ${on ? syncLabel() : 'চালু করা হয়নি'}</span>
+  <small>${L.sync.last ? 'শেষ সিঙ্ক: ' + new Date(L.sync.last).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : ''}</small></div>
+  ${syncErr ? `<div class="warn">${esc(syncErr)}</div>` : ''}`;
+}
 function vSync(){
   const on = !!(L.sync.url && L.sync.key);
-  const label = {ok:'সিঙ্ক হয়েছে', busy:'সিঙ্ক হচ্ছে...', err:'সমস্যা হয়েছে', off:'অফলাইন', idle:'চালু'}[syncState] || 'চালু';
-  return `<div class="card"><h3>☁️ অবস্থা</h3>
-  <div class="ch"><span><span class="sdot ${on?syncState:''}"></span> ${on ? label : 'চালু করা হয়নি'}</span>
-  <small>${L.sync.last ? 'শেষ সিঙ্ক: ' + new Date(L.sync.last).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : ''}</small></div>
-  ${syncErr ? `<div class="warn">${esc(syncErr)}</div>` : ''}
+  const ia = 'autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
+  return `<div class="card"><h3>☁️ অবস্থা</h3><div id="syStat">${syncStatHTML()}</div>
   ${on ? '<button class="btn pri" style="width:100%;margin-top:8px" data-act="syncNow">🔄 এখনই সিঙ্ক করুন</button>' : '<div class="note">চালু করলে ফোন, কম্পিউটার — সব জায়গায় একই হিসাব দেখবেন। ফোন হারালেও ডেটা থাকবে আপনার Google Drive-এ।</div>'}</div>
-  <div class="card"><h3>🔗 সংযোগ</h3>
-  <label class="fl">Apps Script Web App URL</label><input class="fi" id="syU" value="${esc(L.sync.url)}" placeholder="https://script.google.com/macros/s/.../exec">
-  <label class="fl">Secret Key (গোপন পাসওয়ার্ড — Apps Script কোডের SECRET এর সাথে হুবহু মিলতে হবে)</label><input class="fi" id="syK" value="${esc(L.sync.key)}" placeholder="যেমন: farid-hishab-2026">
+  <div class="card"><h3>🛠️ ধাপ ১ — সার্ভার কোড নিন</h3>
+  <div class="note" style="color:var(--tx)">নিচের বাটনে চাপলে আপনার জন্য একটা গোপন Key তৈরি হয়ে কোডের ভেতরে বসে যাবে। কোডটা নিজেকে WhatsApp/Email-এ পাঠিয়ে কম্পিউটারে খুলতে পারেন।</div>
+  <div class="btns" style="margin-top:10px"><button class="btn gold" data-act="copyGas">📋 কোড কপি</button><button class="btn" data-act="shareGas">📤 শেয়ার</button></div>
+  <div class="btns"><button class="btn" data-act="dlGas">⬇️ ফাইল ডাউনলোড</button><button class="btn" data-act="viewGas">👁️ কোড দেখুন</button></div></div>
+  <div class="card"><h3>🛠️ ধাপ ২ — Google-এ বসান (কম্পিউটারে সহজ)</h3>
+  <ol class="steps"><li><b>script.google.com</b> → <b>New project</b> → আগের লেখা সব মুছে কোড পেস্ট → 💾 সেভ</li>
+  <li><b>Deploy → New deployment</b> → ⚙️ থেকে টাইপ <b>Web app</b> → Execute as: <b>Me</b> → Who has access: <b>Anyone</b> → <b>Deploy</b></li>
+  <li>অনুমতি চাইলে: Authorize → আপনার অ্যাকাউন্ট → <b>Advanced → Go to project (unsafe)</b> → Allow। (এটা আপনার নিজের কোড, তাই নিরাপদ)</li>
+  <li>শেষে যে <b>Web app URL</b> দেখাবে (…/exec দিয়ে শেষ) সেটা কপি করুন</li></ol></div>
+  <div class="card"><h3>🔗 ধাপ ৩ — URL বসান</h3>
+  <label class="fl">Apps Script Web App URL</label><input class="fi" id="syU" type="url" inputmode="url" ${ia} value="${esc(L.sync.url)}" placeholder="https://script.google.com/macros/s/.../exec">
+  <button class="mini" data-act="pasteUrl" style="margin:-4px 0 12px">📋 কপি করা URL পেস্ট করুন</button>
+  <label class="fl">Secret Key (কোডের SECRET এর সাথে হুবহু মিলতে হবে)</label><input class="fi" id="syK" type="text" ${ia} value="${esc(L.sync.key)}" placeholder="ধাপ ১-এ নিজে থেকে তৈরি হবে">
+  <div class="note" style="margin:-6px 0 8px">অন্য ফোন/কম্পিউটারে সেটআপ করলে এই একই URL আর Key দিতে হবে — Key-টা কোথাও লিখে রাখুন।</div>
   <div class="setrow"><span>অটো সিঙ্ক <small class="muted">(প্রতিটা পরিবর্তনের পর + প্রতি মিনিটে)</small></span><label class="sw"><input type="checkbox" id="syA" ${L.sync.auto?'checked':''}><span></span></label></div>
-  <div class="btns"><button class="btn pri" data-act="syncSave">সেভ ও সংযোগ পরীক্ষা</button></div></div>
-  <div class="card"><h3>🛠️ সেটআপ (একবারই করতে হবে)</h3>
-  <ol class="steps"><li>প্রথমে উপরে একটা <b>Secret Key</b> লিখে সেভ করুন</li>
-  <li>নিচের বাটনে কোড কপি করুন (আপনার Key কোডের ভেতরে বসানো থাকবে)</li>
-  <li>কম্পিউটারে <b>script.google.com</b> → <b>New project</b> → আগের সব মুছে কোড পেস্ট → সেভ</li>
-  <li><b>Deploy → New deployment</b> → টাইপ: <b>Web app</b> → Execute as: <b>Me</b> → Who has access: <b>Anyone</b> → Deploy</li>
-  <li>Google অনুমতি চাইলে Allow দিন (Advanced → Go to project), তারপর <b>Web app URL</b> কপি করে উপরে বসান → "সেভ ও সংযোগ পরীক্ষা"</li>
-  <li>অন্য ফোন/কম্পিউটারে একই URL আর Key দিন — ব্যস!</li></ol>
-  <button class="btn gold" style="width:100%" data-act="copyGas">📋 Apps Script কোড কপি করুন</button>
-  <div class="note" style="margin-top:8px">ডেটা থাকবে আপনার নিজের Google Drive-এ <b>AMAR_HISHAB_DATA.json</b> ফাইলে। প্রতিদিন <b>AmarHishab_Backups</b> ফোল্ডারে অটো ব্যাকআপ হবে (শেষ ৩০টা রাখা হয়)। কোড আপডেট করলে Deploy → Manage deployments → Edit → New version দিন।</div></div>
+  <div class="btns"><button class="btn pri" data-act="syncSave">✅ সেভ ও সংযোগ পরীক্ষা</button></div>
+  <div class="note" style="margin-top:8px">ডেটা থাকবে আপনার Google Drive-এ <b>AMAR_HISHAB_DATA.json</b> ফাইলে, প্রতিদিন <b>AmarHishab_Backups</b> ফোল্ডারে অটো ব্যাকআপ (শেষ ৩০টা)।</div></div>
   ${on ? `<div class="card"><h3>🧰 অ্যাডভান্সড</h3>
   <button class="sbtn" data-act="forcePull">⬇️ ক্লাউড থেকে সব নামান <small class="muted">(এই ফোনের ডেটা বদলে যাবে)</small></button>
   <button class="sbtn" data-act="forcePush">⬆️ এই ফোনের ডেটা দিয়ে ক্লাউড বদলান</button>
-  <div class="note">সাধারণ অবস্থায় এগুলো লাগবে না — অটো সিঙ্ক দুই দিকের ডেটা নিজেই মিলিয়ে নেয়, কিছু হারায় না, ডুপ্লিকেটও হয় না।</div></div>` : ''}`;
+  <div class="note">সাধারণ অবস্থায় এগুলো লাগবে না — অটো সিঙ্ক দুই দিকের ডেটা নিজেই মিলিয়ে নেয়।</div></div>` : ''}`;
 }
 /* ---------- সেটিংস ---------- */
 function vSet(){
@@ -836,6 +860,7 @@ function vGuide(){
   <li>ঋণ নিলে <b>ঋণ গ্রহণ</b> → টাকা কোন অ্যাকাউন্টে এলো → কার কাছ থেকে। এটা আয় নয়, তাই আয়ের হিসাব ঠিক থাকে, আর ঋণ ট্যাবে বাকি বাড়ে। (অথবা ঋণ ট্যাব → + নতুন ঋণ → "এখন ঋণ নিচ্ছি")</li>
   <li>কিস্তি দিলে <b>ঋণ পরিশোধ</b> → ঋণের নাম বাছুন — ঋণের ব্যালেন্স নিজে থেকে কমবে।</li>
   <li>প্রতি মাসে একই থাকে এমন লেনদেন <b>আরও → নির্দিষ্ট মাসিক</b>-এ রাখুন — হোমে এক ট্যাপে যোগ হবে।</li>
+  <li>যেকোনো <b>খাতের নামে চাপ দিলে</b> (হোমের চার্টের নিচে, বাজেট, রিপোর্ট বা লেনদেনে খাত ফিল্টার করলে) সেই খাতের তারিখভিত্তিক বিবরণ দেখবেন। কী কিনলেন তা <b>নোট</b>-এ লিখে রাখলে সেখানে দেখাবে।</li>
   <li>মাস শেষে <b>রিপোর্ট</b> ট্যাবে পুরো মাসের হিসাব বিবরণী দেখুন, প্রিন্ট/PDF করুন।</li>
   <li>হাতের টাকা আর অ্যাপের ব্যালেন্স না মিললে <b>অ্যাকাউন্ট → মিলিয়ে নিন</b>।</li>
   <li>উপরের ‹ › দিয়ে আগের/পরের মাসে যান। কোনো লেনদেনে চাপ দিলে এডিট/মুছতে পারবেন।</li></ol></div>
@@ -881,7 +906,7 @@ function drawCharts(){
       x.globalCompositeOperation = 'destination-out'; x.beginPath(); x.arc(cx,cy,r,0,Math.PI*2); x.fill(); x.globalCompositeOperation = 'source-over';
       x.fillStyle = tx; x.textAlign = 'center'; x.font = '700 15px system-ui'; x.fillText(L.hide ? '৳ ••••' : fmt(tot), cx, cy+3);
       x.fillStyle = mu; x.font = '11px system-ui'; x.fillText('মোট', cx, cy+19);
-      $('#dLeg').innerHTML = it.map(o => `<div><span><i style="background:${o.col}"></i>${esc(o.l)}</span><span>${mv(o.v)} · ${Math.round(o.v/tot*100)}%</span></div>`).join('');
+      $('#dLeg').innerHTML = it.map(o => `<div ${o.c?`class="hl" data-head="${o.c}" data-hs="${esc(o.l)}"`:''}><span><i style="background:${o.col}"></i><span class="hn">${esc(o.l)}</span></span><span>${mv(o.v)} · ${Math.round(o.v/tot*100)}%</span></div>`).join('');
     }
   }
   const cdy = $('#cDaily');
@@ -921,6 +946,46 @@ function openSheet(html){ closeSheet(true); const o = document.createElement('di
 function closeSheet(silent){ const o = $('#ov'); if(o) o.remove(); if(!silent && pendingRender) render(); }
 function head(t){ return `<div class="shead"><h2>${t}</h2><button class="x" data-close aria-label="বন্ধ">✕</button></div>`; }
 
+/* ---- খাতভিত্তিক বিস্তারিত ---- */
+function headSheet(c, s, m0){
+  let m = m0 || M;
+  const sh = openSheet('<div id="hdBox"></div>'), box = sh.querySelector('#hdBox');
+  const draw = () => {
+    const C = CATS[c] || CATS.exp;
+    const monthTot = mm => S.txns.filter(t => t.c===c && t.s===s && ymOf(t.d)===mm).reduce((a,t)=>a+t.a,0);
+    const list = sortTx(S.txns.filter(t => t.c===c && t.s===s && ymOf(t.d)===m));
+    const tot = list.reduce((a,t)=>a+t.a,0), pl = +(((S.budget[m]||{})[c]||{})[s]) || 0;
+    const ms = []; for(let k=5;k>=0;k--) ms.push(addM(m,-k));
+    const mv6 = ms.map(monthTot), mx = Math.max(1, ...mv6), avg6 = mv6.reduce((a,b)=>a+b,0)/6;
+    const allL = S.txns.filter(t => t.c===c && t.s===s), allT = allL.reduce((a,t)=>a+t.a,0);
+    const big = list.slice().sort((a,b)=>b.a-a.a)[0];
+    const bad = c!=='inc' && c!=='lin' && pl>0 && tot>pl;
+    box.innerHTML = `${head(`${C.ic} ${esc(s)}`)}
+    <div class="mbar" style="background:var(--soft);border-color:var(--bd);margin:0 0 12px"><button data-hm="-1" style="color:var(--tx)">‹</button><b style="color:var(--tx)">${mLabel(m)}</b><button data-hm="1" style="color:var(--tx)">›</button></div>
+    <div class="tiles" style="margin-bottom:10px">
+      <div class="tile"><div class="tn">💵 এই মাসে মোট</div><div class="tv ${bad?'neg':''}">${mv(tot)}</div><div class="tp">${list.length} বার</div></div>
+      <div class="tile"><div class="tn">🎯 বাজেট</div><div class="tv">${pl?mv(pl):'—'}</div><div class="tp">${pl ? (bad ? '<span class="neg">বেশি '+fmt(tot-pl)+'</span>' : 'বাকি '+fmt(pl-tot)) : 'বাজেট দেওয়া নেই'}</div></div>
+      <div class="tile"><div class="tn">📊 প্রতিবার গড়</div><div class="tv">${mv(list.length ? tot/list.length : 0)}</div><div class="tp">সবচেয়ে বড়: ${big ? fmt(big.a) : '—'}</div></div>
+      <div class="tile"><div class="tn">📈 ৬ মাসের গড়</div><div class="tv">${mv(avg6)}</div><div class="tp">${avg6>0 && tot ? (tot>avg6 ? '<span class="neg">▲ গড়ের চেয়ে বেশি</span>' : '<span class="pos">▼ গড়ের চেয়ে কম</span>') : 'প্রতি মাসে'}</div></div>
+    </div>
+    ${pl ? `<div class="bar" style="height:9px;margin-bottom:12px"><i style="width:${Math.min(100,tot/pl*100)}%;background:${bad?'var(--red)':C.col}"></i></div>` : ''}
+    <div class="card" style="padding:12px;margin-bottom:12px"><h3 style="margin-bottom:0">📅 গত ৬ মাস</h3>
+    <div class="hbars">${ms.map((mm,i) => `<button class="${mm===m?'on':''}" data-hjump="${mm}"><span>${mv6[i]?short(mv6[i]):''}</span><i style="height:${Math.round(mv6[i]/mx*72)}px"></i>${MS[+mm.slice(5)-1]}</button>`).join('')}</div></div>
+    <div class="card" style="padding:6px 12px;margin-bottom:12px"><h3 style="margin:8px 0 2px">🧾 তারিখভিত্তিক বিবরণ</h3>
+    ${list.length ? list.map(t => { const [y,mo,dd] = t.d.split('-').map(Number); return `<div class="hrow2" data-htx="${t.id}"><div class="hd"><b>${dd}</b><small>${WD[new Date(y,mo-1,dd).getDay()].replace('বার','')}</small></div>
+      <div class="hm"><b>${t.n ? esc(t.n) : '<span class="muted">নোট নেই</span>'}</b><small>${esc(accName(t.acc))}</small></div><div class="ta ${c==='inc'||c==='lin'?'pos':'neg'}">${mv(t.a)}</div></div>`; }).join('')
+      : '<div class="empty">এই মাসে এই খাতে কিছু নেই</div>'}</div>
+    <div class="note" style="text-align:center;margin-bottom:10px">শুরু থেকে এই খাতে মোট: <b>${fmt(allT)}</b> (${allL.length} বার)</div>
+    <button class="btn pri" style="width:100%" data-hnew="1">+ এই খাতে নতুন এন্ট্রি</button>`;
+  };
+  draw();
+  box.addEventListener('click', ev => { const b = ev.target.closest('[data-hm],[data-hjump],[data-htx],[data-hnew]'); if(!b) return; const D = b.dataset;
+    if(D.hm){ m = addM(m, +D.hm); draw(); }
+    else if(D.hjump){ m = D.hjump; draw(); }
+    else if(D.htx){ const t = S.txns.find(x=>x.id===D.htx); if(t) txForm(t); }
+    else if(D.hnew){ txForm(null, c, s); if(m !== ymOf(today())) setTimeout(() => { const d = $('#fD'); if(d) d.value = m + '-01'; }, 30); } });
+}
+
 /* ---- লেনদেন ফর্ম ---- */
 function defDate(){ return M===ymOf(today()) ? today() : M+'-01'; }
 function txForm(t, preset, psub){
@@ -932,7 +997,7 @@ function txForm(t, preset, psub){
   <div class="seg" id="fC">${TYPES.map(k=>`<button type="button" data-c="${k}" class="${k===c?'on':''}" style="--cc:${CATS[k].col}">${CATS[k].ic} ${CATS[k].bn}</button>`).join('')}</div>
   <div class="amt"><span>৳</span><input id="fA" inputmode="decimal" value="${e.a||''}" placeholder="0" autocomplete="off"></div><div class="amthint" id="fAh"></div>
   <div id="fB"></div>
-  <div class="row2"><div><label class="fl">তারিখ</label><input class="fi" type="date" id="fD" value="${e.d}"></div><div><label class="fl">নোট (ঐচ্ছিক)</label><input class="fi" id="fN" value="${esc(e.n)}" placeholder="যেমন: কারওয়ান বাজার"></div></div>
+  <div class="row2"><div><label class="fl">তারিখ</label><input class="fi" type="date" id="fD" value="${e.d}"></div><div><label class="fl">নোট (ঐচ্ছিক)</label><input class="fi" id="fN" value="${esc(e.n)}" placeholder="যেমন: আলু ২ কেজি, পেঁয়াজ, ডিম"></div></div>
   <div class="btns">${t?'<button class="btn del" id="fDel">মুছুন</button>':'<button class="btn" id="fMore">সেভ + আরেকটা</button>'}<button class="btn pri" id="fSave">সেভ</button></div>`);
   const accChips = (sel, attr, skip) => S.accs.filter(a => a.id!==skip).map(a => `<button type="button" class="chip ${a.id===sel?'on':''}" data-${attr}="${a.id}">${a.ic} ${esc(a.name)}</button>`).join('');
   const drawSubs = () => { const box = sh.querySelector('#fS'); if(!box) return; const q = sq.toLowerCase();
@@ -1144,8 +1209,7 @@ let syncState = 'idle', syncErr = '', syncing = false, syncAgain = false, syncT 
 function setSync(st, err){
   syncState = st; syncErr = err || '';
   $('#sdot').className = 'sdot ' + (L.sync.url && L.sync.key ? st : '');
-  const ae = document.activeElement;
-  if(TAB==='sync' && !$('#ov') && !(ae && ae.id && ae.id.startsWith('sy'))) render();
+  const box = $('#syStat'); if(box) box.innerHTML = syncStatHTML();   // পুরো পেজ নয় — শুধু অবস্থা অংশ
 }
 function scheduleSync(){ if(!L.sync.url || !L.sync.key || !L.sync.auto) return; clearTimeout(syncT); syncT = setTimeout(() => sync(false), 2500); }
 async function post(body){
@@ -1246,10 +1310,22 @@ function out_(o){ return ContentService.createTextOutput(JSON.stringify(o)).setM
 ${mergeData.toString()}
 `;
 }
-function copyText(t, msg){
+function ensureKey(){
+  const inp = $('#syK'); if(inp && inp.value.trim()) L.sync.key = inp.value.trim();
+  if(!L.sync.key){ const a = 'abcdefghjkmnpqrstuvwxyz23456789'; let k = 'hishab-'; const r = crypto.getRandomValues(new Uint8Array(10)); r.forEach(x => k += a[x % a.length]); L.sync.key = k; }
+  saveL(); if(inp) inp.value = L.sync.key; return L.sync.key;
+}
+function viewGas(){
+  const sh = openSheet(`${head('Apps Script কোড')}<div class="note" style="margin-bottom:8px">বক্সে চেপে ধরে "Select all" → "Copy" করুন।</div>
+  <textarea class="fi" id="gasTa" readonly style="height:50vh;font:11px/1.4 monospace;white-space:pre"></textarea>
+  <button class="btn pri" style="width:100%" id="gasSel">সব সিলেক্ট করে কপি</button>`);
+  const ta = sh.querySelector('#gasTa'); ta.value = gasCode();
+  sh.querySelector('#gasSel').onclick = () => { ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length); try{ document.execCommand('copy'); toast('📋 কপি হয়েছে'); }catch(e){ toast('এখন চেপে ধরে Copy করুন'); } };
+}
+function copyText(t, msg, onFail){
   const ok = () => toast(msg || '📋 কপি হয়েছে');
   const fallback = () => { const ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
-    try{ document.execCommand('copy'); ok(); }catch(e){ toast('কপি হয়নি'); } ta.remove(); };
+    let done = false; try{ done = document.execCommand('copy'); }catch(e){} ta.remove(); if(done) ok(); else if(onFail) onFail(); else toast('কপি হয়নি'); };
   if(navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(ok, fallback); else fallback();
 }
 
@@ -1309,9 +1385,10 @@ $('#btnSet').onclick = () => go('set');
 $('#btnSync').onclick = () => go('sync');
 $('#nav').onclick = e => { const b = e.target.closest('button[data-tab]'); if(!b) return; if(b.dataset.tab==='more') menuSheet(); else go(b.dataset.tab); };
 $('#view').addEventListener('click', e => {
-  const t = e.target.closest('[data-tx],[data-go],[data-act],[data-goal],[data-loan],[data-addsub],[data-f],[data-fa],[data-new],[data-recadd],[data-recedit],[data-accedit],[data-accfix],[data-theme],[data-sc],[data-ren],[data-dsub],[data-lin],[data-lpay]');
+  const t = e.target.closest('[data-tx],[data-go],[data-act],[data-goal],[data-loan],[data-addsub],[data-f],[data-fa],[data-new],[data-recadd],[data-recedit],[data-accedit],[data-accfix],[data-theme],[data-sc],[data-ren],[data-dsub],[data-lin],[data-lpay],[data-head]');
   if(!t) return; const D = t.dataset;
-  if(D.tx){ const x = S.txns.find(y=>y.id===D.tx); if(x) txForm(x); }
+  if(D.head) headSheet(D.head, D.hs);
+  else if(D.tx){ const x = S.txns.find(y=>y.id===D.tx); if(x) txForm(x); }
   else if(D.go) go(D.go);
   else if(D.new) txForm(null, D.new);
   else if(D.f){ fCat = D.f; document.querySelectorAll('#txF .chip').forEach(c=>c.classList.toggle('on', c===t)); drawTxList(); }
@@ -1357,10 +1434,14 @@ function act(a){
       if(!L.sync.url || !L.sync.key){ setSync('idle'); render(); toast(L.sync.key ? '✅ Key সেভ হয়েছে — এবার কোড কপি করে সেটআপ করুন' : 'URL আর Secret Key দুটোই দিন'); return; }
       if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(L.sync.url)) toast('URL টা script.google.com এর হওয়া উচিত');
       setSync('busy'); toast('⏳ সংযোগ পরীক্ষা হচ্ছে...');
-      post({action:'ping'}).then(r => { toast(`✅ সংযোগ সফল! ক্লাউডে ${r.count}টি লেনদেন আছে`); setSync('ok'); sync(false); })
+      post({action:'ping'}).then(r => { toast(`✅ সংযোগ সফল! ক্লাউডে ${r.count}টি লেনদেন আছে`); setSync('ok'); if(TAB==='sync') render(); sync(false); })
         .catch(e => { setSync('err', e.message); toast('⚠️ ' + e.message); });
       break; }
-    case 'copyGas': if(!L.sync.key){ toast('আগে একটা Secret Key লিখে সেভ করুন'); return; } copyText(gasCode(), '📋 Apps Script কোড কপি হয়েছে'); break;
+    case 'copyGas': ensureKey(); copyText(gasCode(), '📋 কোড কপি হয়েছে — এবার script.google.com-এ পেস্ট করুন', viewGas); break;
+    case 'shareGas': { ensureKey(); const t = gasCode(); if(navigator.share) navigator.share({title:'আমার হিসাব — Apps Script কোড', text:t}).catch(()=>{}); else copyText(t, '📋 কোড কপি হয়েছে', viewGas); break; }
+    case 'dlGas': ensureKey(); download('AmarHishab_AppsScript.gs.txt', gasCode(), 'text/plain;charset=utf-8'); break;
+    case 'viewGas': ensureKey(); viewGas(); break;
+    case 'pasteUrl': if(navigator.clipboard && navigator.clipboard.readText) navigator.clipboard.readText().then(t => { t = (t||'').trim(); if(!t){ toast('ক্লিপবোর্ড খালি'); return; } $('#syU').value = t; toast('✅ পেস্ট হয়েছে — এবার "সেভ ও সংযোগ পরীক্ষা" চাপুন'); }, () => toast('পেস্ট করা গেল না — ঘরে চেপে ধরে Paste করুন')); else toast('ঘরে চেপে ধরে Paste করুন'); break;
     case 'install': if(installEvt){ installEvt.prompt(); installEvt.userChoice.finally(() => { installEvt = null; render(); }); } break;
     case 'forcePull': forcePull(); break;
     case 'forcePush': forcePush(); break;

@@ -58,7 +58,7 @@ main>*{animation:rise .28s ease-out both}
 .hbig{font-size:34px;font-weight:700;margin:4px 0 12px;letter-spacing:.3px;position:relative}
 .hbig.neg{color:#ffc9c4}
 .hpills{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;position:relative}
-.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:8px 10px;backdrop-filter:blur(6px);min-width:0}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:8px 10px;min-width:0}
 .pill small{display:block;font-size:11px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pill b{font-size:14px;font-weight:600;white-space:nowrap}
 .accs{display:flex;gap:10px;overflow-x:auto;margin:0 -14px 14px;padding:2px 14px 6px;scrollbar-width:none}
@@ -115,7 +115,7 @@ canvas{width:100%;display:block}
 /* ================= বাজেট ================= */
 .brow{display:grid;grid-template-columns:1fr 96px 88px;gap:8px;align-items:center;padding:8px 0 6px;border-bottom:1px dashed var(--bd)}
 .brow .bn{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.brow input{width:100%;padding:8px;border:1px solid var(--bd);border-radius:10px;text-align:right;background:var(--card2)}
+.brow .bpl{padding:8px;border:1px solid var(--bd);border-radius:10px;text-align:right;background:var(--card2);font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden}
 .brow .ba{text-align:right;font-size:13px;font-weight:600}
 .brow .bar{grid-column:1/-1;margin-top:0;height:5px}
 .bhead{display:grid;grid-template-columns:1fr 96px 88px;gap:8px;font-size:11px;color:var(--mu);text-align:right}
@@ -170,7 +170,7 @@ nav .fabw{flex:1;display:flex;justify-content:center}
 .fab{width:60px;height:60px;margin-top:-26px;border-radius:20px;border:4px solid var(--bg);background:linear-gradient(135deg,var(--gold1),var(--gold));color:#3a2800;font-size:32px;font-weight:700;box-shadow:0 8px 20px rgba(245,179,1,.45);line-height:1;transition:transform .15s}
 .fab:active{transform:scale(.92)}
 /* ================= শিট ================= */
-.ov{position:fixed;inset:0;background:rgba(5,15,10,.5);z-index:50;display:flex;align-items:flex-end;justify-content:center;animation:fi .15s;backdrop-filter:blur(2px)}
+.ov{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(5,15,10,.5);z-index:50;display:flex;align-items:flex-end;justify-content:center;animation:fi .15s}
 .sheet{background:var(--card);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:24px 24px 0 0;padding:8px 16px calc(18px + env(safe-area-inset-bottom));animation:su .22s ease-out}
 .grab{width:42px;height:5px;background:var(--bd);border-radius:5px;margin:4px auto 10px}
 .shead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
@@ -204,7 +204,7 @@ nav .fabw{flex:1;display:flex;justify-content:center}
 .menu i{font-style:normal;font-size:26px}
 .sw{position:relative;width:48px;height:28px;flex:none;display:inline-block}
 .sw input{opacity:0;width:0;height:0}
-.sw span{position:absolute;inset:0;background:var(--bd);border-radius:28px;transition:.2s}
+.sw span{position:absolute;top:0;right:0;bottom:0;left:0;background:var(--bd);border-radius:28px;transition:.2s}
 .sw span:before{content:"";position:absolute;width:22px;height:22px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .sw input:checked+span{background:var(--g3)}
 .sw input:checked+span:before{transform:translateX(20px)}
@@ -215,7 +215,7 @@ ol.steps{padding-left:20px;margin:6px 0;font-size:13.5px;line-height:1.7}
 .toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(10px);background:#15201b;color:#fff;padding:10px 18px;border-radius:22px;z-index:300;font-size:14px;opacity:0;transition:.2s;pointer-events:none;max-width:92vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .toast.show{opacity:1;transform:translateX(-50%)}
 /* ================= লক স্ক্রিন ================= */
-.lock{position:fixed;inset:0;z-index:200;background:linear-gradient(160deg,var(--g1),var(--g2) 55%,var(--g3));color:#fff;display:flex;align-items:center;justify-content:center;outline:0}
+.lock{position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;background:linear-gradient(160deg,var(--g1),var(--g2) 55%,var(--g3));color:#fff;display:flex;align-items:center;justify-content:center;outline:0}
 .lk{text-align:center;width:100%;max-width:320px;padding:20px}
 .lklogo{width:74px;height:74px;margin:0 auto 10px;border-radius:24px;background:linear-gradient(135deg,var(--gold1),var(--gold));color:#3a2800;font-size:40px;font-weight:700;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .lk h2{margin:6px 0 2px}.lk p{margin:0 0 18px;opacity:.8}
@@ -269,11 +269,16 @@ ol.steps{padding-left:20px;margin:6px 0;font-size:13.5px;line-height:1.7}
 <div id="printArea"></div>
 <script>
 'use strict';
+/* ---- সমস্যার লগ: কোনো এরর হলে দেখাবে, সেটিংসে জমা থাকবে ---- */
+function logErr(m){ try{ const l = JSON.parse(localStorage.getItem('amar_hishab_err') || '[]'); l.push(new Date().toLocaleString('en-GB') + ' — ' + m); while(l.length > 15) l.shift(); localStorage.setItem('amar_hishab_err', JSON.stringify(l)); }catch(e){}
+  try{ toast('⚠️ সমস্যা: ' + String(m).slice(0, 70)); }catch(e){} }
+window.addEventListener('error', e => logErr((e.message || 'error') + (e.lineno ? ' (লাইন ' + e.lineno + ')' : '')));
+window.addEventListener('unhandledrejection', e => { const r = e.reason; logErr('Promise: ' + (r && r.message ? r.message : String(r))); });
 /* =====================================================================
    আমার হিসাব v2 — পার্সোনাল ফাইন্যান্স অ্যাপ (একক HTML ফাইল)
    ডেটা: localStorage (amar_hishab_v2) + ঐচ্ছিক Google Apps Script ক্লাউড সিঙ্ক
    ===================================================================== */
-const APP_VER = '2.4';
+const APP_VER = '2.5';
 const KEY = 'amar_hishab_v2', OLDKEY = 'amaz_personal_hisab_v1', LKEY = 'amar_hishab_local';
 const CATS = {
   inc:  {bn:'আয়',        ic:'💰', col:'#16a05a'},
@@ -299,6 +304,7 @@ const DEF_SUBS = {
   debt: ['পার্সোনাল লোন']
 };
 const CHANGELOG = [
+  {v:'2.5', d:'2026-09-28', items:['বাজেট, নাম, ক্লাউড সিঙ্কের URL/Key — সব এন্ট্রি এখন নিচ থেকে খোলা ফর্মে (কিছু ফোনে পাতার ভেতরের ঘরে লেখা যাচ্ছিল না)','বাজেট দ্রুত দেওয়া: "সেভ + পরের খাত" ও গত মাসের অঙ্ক এক ট্যাপে','পুরনো ফোন/ব্রাউজারের জন্য সামঞ্জস্য ও গতি বাড়ানো','সমস্যা হলে কারণ দেখানো ও সেটিংসে সমস্যার লগ']},
   {v:'2.4', d:'2026-09-28', items:['খাতভিত্তিক বিস্তারিত — যেকোনো খাতে (যেমন বাজার-সদাই) চাপ দিলে মাসের তারিখভিত্তিক সব কেনাকাটা, নোট, মোট, বাজেট, গড় ও ৬ মাসের তুলনা','হোম, বাজেট ও রিপোর্ট — সব জায়গা থেকে খাতে চাপ দেওয়া যায়','লেনদেন ট্যাবে "খাত অনুযায়ী" সারাংশ']},
   {v:'2.3', d:'2026-09-28', items:['ক্লাউড সিঙ্ক সেটআপ সহজ: Secret Key নিজে থেকে তৈরি হয়, URL এক ট্যাপে পেস্ট','Apps Script কোড কপি না হলে শেয়ার/ডাউনলোড/দেখে কপি করার অপশন','সিঙ্ক চলার সময় লেখার ঘর থেকে ফোকাস সরে যাওয়ার সমস্যা ঠিক করা হয়েছে']},
   {v:'2.2', d:'2026-09-28', items:['নতুন ধরন "ঋণ গ্রহণ" — ঋণ নিলে টাকা অ্যাকাউন্টে যোগ হয়, কিন্তু আয় হিসেবে ধরা হয় না','নতুন ঋণ যোগ করার সময়ই টাকা কোন অ্যাকাউন্টে এলো তা দেওয়া যায়','একই ঋণে পরে আরও টাকা নেওয়া যায় — বাকি নিজে থেকে বাড়ে','কিস্তি ঠিক না হওয়া ঋণ (যেমন আত্মীয়/বন্ধুর কাছ থেকে হাওলাত) রাখা যায়','মাসিক রিপোর্টে "(+) ঋণ গ্রহণ" লাইন']},
@@ -382,9 +388,9 @@ const L = loadL();
 /* ================= হেল্পার ================= */
 const $ = s => document.querySelector(s);
 const bnD = s => String(s).replace(/[০-৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
-const num = v => { const n = parseFloat(bnD(v ?? '').replace(/[,৳\s]/g,'')); return isFinite(n) ? n : 0; };
+const num = v => { const n = parseFloat(bnD((v == null ? '' : v)).replace(/[,৳\s]/g,'')); return isFinite(n) ? n : 0; };
 function evalAmt(v){ // "250+120" এর মতো হিসাবও চলবে
-  const x = bnD(v ?? '').replace(/[,৳\s]/g,'').replace(/×/g,'*').replace(/÷/g,'/');
+  const x = bnD((v == null ? '' : v)).replace(/[,৳\s]/g,'').replace(/×/g,'*').replace(/÷/g,'/');
   if(!x) return 0;
   if(/^-?[0-9.]+$/.test(x)) return parseFloat(x) || 0;
   if(!/^[0-9+\-*/.()]+$/.test(x)) return NaN;
@@ -393,7 +399,7 @@ function evalAmt(v){ // "250+120" এর মতো হিসাবও চলব�
 const r2 = n => Math.round(n*100)/100;
 const fmt = n => (n < -0.004 ? '−' : '') + '৳ ' + Math.abs(r2(n)).toLocaleString('en-IN', {maximumFractionDigits:2});
 const mv = n => `<span class="mv">${fmt(n)}</span>`;
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc = s => String((s == null ? '' : s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
 const now = () => Date.now();
 const pad = n => String(n).padStart(2,'0');
@@ -712,7 +718,7 @@ function vBud(){
     const rows = subsWithData(c, M).map(s => {
       const pl = (b[c]||{})[s] || 0, ac = act[s] || 0;
       const pct = pl>0 ? Math.min(100, ac/pl*100) : (ac>0?100:0), bad = c!=='inc' && pl>0 && ac>pl;
-      return `<div class="brow"><div class="bn hl" data-head="${c}" data-hs="${esc(s)}">${esc(s)}</div><input class="bin" inputmode="decimal" data-c="${c}" data-s="${esc(s)}" value="${pl||''}" placeholder="0">
+      return `<div class="brow hl" data-bud="${c}" data-bs="${esc(s)}"><div class="bn">${esc(s)}</div><div class="bpl">${pl?mv(pl):'<span class="muted">+ দিন</span>'}</div>
       <div class="ba ${bad?'over':''}">${mv(ac)}</div><div class="bar"><i style="width:${pct}%;background:${bad?'var(--red)':CATS[c].col}"></i></div></div>`;
     }).join('');
     return `<div class="card"><div class="ch"><span>${CATS[c].ic} ${CATS[c].bn}</span><small>${fmt(a[c])} / ${fmt(p[c])}</small></div>
@@ -723,7 +729,7 @@ function vBud(){
     <div class="hr1"><span>${mLabel(M)} — পরিকল্পিত নিট</span></div>
     <div class="hbig" style="font-size:26px;margin-bottom:8px">${mv(p.net)}</div>
     <div class="hpills"><div class="pill"><small>পরিকল্পিত আয়</small><b>${mv(p.inc)}</b></div><div class="pill"><small>পরিকল্পিত ব্যয়</small><b>${mv(p.out)}</b></div><div class="pill"><small>আসল নিট</small><b>${mv(a.net)}</b></div></div></div>
-  <div class="card" style="background:var(--soft)"><div class="note" style="color:var(--tx)">প্রতিটি খাতে এই মাসের পরিকল্পিত অঙ্ক লিখুন। আসল অঙ্ক লেনদেন থেকে নিজে থেকেই বসবে। লাল হলে বুঝবেন বাজেট ছাড়িয়ে গেছে।</div>
+  <div class="card" style="background:var(--soft)"><div class="note" style="color:var(--tx)">যেকোনো খাতে <b>চাপ দিয়ে</b> এই মাসের পরিকল্পিত অঙ্ক দিন। আসল অঙ্ক লেনদেন থেকে নিজে থেকেই বসবে। লাল হলে বুঝবেন বাজেট ছাড়িয়ে গেছে।</div>
   <button class="link" data-act="copyBud">📋 আগের মাসের বাজেট কপি করুন</button></div>${cards}`;
 }
 
@@ -818,12 +824,11 @@ function vSync(){
   <li>অনুমতি চাইলে: Authorize → আপনার অ্যাকাউন্ট → <b>Advanced → Go to project (unsafe)</b> → Allow। (এটা আপনার নিজের কোড, তাই নিরাপদ)</li>
   <li>শেষে যে <b>Web app URL</b> দেখাবে (…/exec দিয়ে শেষ) সেটা কপি করুন</li></ol></div>
   <div class="card"><h3>🔗 ধাপ ৩ — URL বসান</h3>
-  <label class="fl">Apps Script Web App URL</label><input class="fi" id="syU" type="url" inputmode="url" ${ia} value="${esc(L.sync.url)}" placeholder="https://script.google.com/macros/s/.../exec">
-  <button class="mini" data-act="pasteUrl" style="margin:-4px 0 12px">📋 কপি করা URL পেস্ট করুন</button>
-  <label class="fl">Secret Key (কোডের SECRET এর সাথে হুবহু মিলতে হবে)</label><input class="fi" id="syK" type="text" ${ia} value="${esc(L.sync.key)}" placeholder="ধাপ ১-এ নিজে থেকে তৈরি হবে">
-  <div class="note" style="margin:-6px 0 8px">অন্য ফোন/কম্পিউটারে সেটআপ করলে এই একই URL আর Key দিতে হবে — Key-টা কোথাও লিখে রাখুন।</div>
+  <div class="kv" style="margin:0 0 10px"><span>URL</span><span style="max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${L.sync.url ? esc(L.sync.url.replace('https://script.google.com/macros/s/','…/')) : '<span class="muted">দেওয়া হয়নি</span>'}</span><span>Secret Key</span><span>${L.sync.key ? esc(L.sync.key) : '<span class="muted">দেওয়া হয়নি</span>'}</span></div>
+  <button class="btn gold" style="width:100%;margin-bottom:8px" data-act="syncEdit">✏️ URL ও Key বসান / বদলান</button>
+  <div class="note" style="margin-bottom:6px">অন্য ফোন/কম্পিউটারে সেটআপ করলে এই একই URL আর Key দিতে হবে — Key-টা কোথাও লিখে রাখুন।</div>
   <div class="setrow"><span>অটো সিঙ্ক <small class="muted">(প্রতিটা পরিবর্তনের পর + প্রতি মিনিটে)</small></span><label class="sw"><input type="checkbox" id="syA" ${L.sync.auto?'checked':''}><span></span></label></div>
-  <div class="btns"><button class="btn pri" data-act="syncSave">✅ সেভ ও সংযোগ পরীক্ষা</button></div>
+  ${L.sync.url && L.sync.key ? '<div class="btns"><button class="btn pri" data-act="syncTest">✅ সংযোগ পরীক্ষা</button></div>' : ''}
   <div class="note" style="margin-top:8px">ডেটা থাকবে আপনার Google Drive-এ <b>AMAR_HISHAB_DATA.json</b> ফাইলে, প্রতিদিন <b>AmarHishab_Backups</b> ফোল্ডারে অটো ব্যাকআপ (শেষ ৩০টা)।</div></div>
   ${on ? `<div class="card"><h3>🧰 অ্যাডভান্সড</h3>
   <button class="sbtn" data-act="forcePull">⬇️ ক্লাউড থেকে সব নামান <small class="muted">(এই ফোনের ডেটা বদলে যাবে)</small></button>
@@ -832,7 +837,7 @@ function vSync(){
 }
 /* ---------- সেটিংস ---------- */
 function vSet(){
-  return `<div class="card"><h3>👤 প্রোফাইল</h3><label class="fl">আপনার নাম (রিপোর্টে ও শুভেচ্ছায় দেখাবে)</label><input class="fi" id="stName" value="${esc(L.name)}" placeholder="যেমন: ফরিদ" style="margin-bottom:0"></div>
+  return `${errCard()}<div class="card"><h3>👤 প্রোফাইল</h3><div class="setrow" style="border:0;padding:0" data-act="name"><span>${L.name ? esc(L.name) : '<span class="muted">নাম দেওয়া নেই</span>'}</span><button class="mini" data-act="name">✏️ বদলান</button></div></div>
   ${installCard(true)}
   <div class="card"><h3>🎨 থিম</h3><div class="segs">${[['auto','অটো'],['light','☀️ লাইট'],['dark','🌙 ডার্ক']].map(([k,l])=>`<button data-theme="${k}" class="${L.theme===k?'on':''}">${l}</button>`).join('')}</div></div>
   <div class="card"><h3>🔒 নিরাপত্তা</h3>
@@ -861,6 +866,7 @@ function vGuide(){
   <li>কিস্তি দিলে <b>ঋণ পরিশোধ</b> → ঋণের নাম বাছুন — ঋণের ব্যালেন্স নিজে থেকে কমবে।</li>
   <li>প্রতি মাসে একই থাকে এমন লেনদেন <b>আরও → নির্দিষ্ট মাসিক</b>-এ রাখুন — হোমে এক ট্যাপে যোগ হবে।</li>
   <li>যেকোনো <b>খাতের নামে চাপ দিলে</b> (হোমের চার্টের নিচে, বাজেট, রিপোর্ট বা লেনদেনে খাত ফিল্টার করলে) সেই খাতের তারিখভিত্তিক বিবরণ দেখবেন। কী কিনলেন তা <b>নোট</b>-এ লিখে রাখলে সেখানে দেখাবে।</li>
+  <li><b>বাজেট</b> দিতে খাতের সারিতে চাপ দিন → অঙ্ক লিখুন → "সেভ + পরের খাত" দিয়ে একটানা সব খাতের বাজেট দিন।</li>
   <li>মাস শেষে <b>রিপোর্ট</b> ট্যাবে পুরো মাসের হিসাব বিবরণী দেখুন, প্রিন্ট/PDF করুন।</li>
   <li>হাতের টাকা আর অ্যাপের ব্যালেন্স না মিললে <b>অ্যাকাউন্ট → মিলিয়ে নিন</b>।</li>
   <li>উপরের ‹ › দিয়ে আগের/পরের মাসে যান। কোনো লেনদেনে চাপ দিলে এডিট/মুছতে পারবেন।</li></ol></div>
@@ -946,6 +952,71 @@ function openSheet(html){ closeSheet(true); const o = document.createElement('di
 function closeSheet(silent){ const o = $('#ov'); if(o) o.remove(); if(!silent && pendingRender) render(); }
 function head(t){ return `<div class="shead"><h2>${t}</h2><button class="x" data-close aria-label="বন্ধ">✕</button></div>`; }
 
+/* ---- ছোট ইনপুট শিট ---- */
+function askSheet(title, label, val, cb, ph, numeric){
+  const sh = openSheet(`${head(title)}<label class="fl">${label}</label><input class="fi" id="aqI" value="${esc(val)}" placeholder="${esc(ph)}" autocomplete="off" ${numeric?'inputmode="decimal"':''}>
+  <button class="btn pri" style="width:100%" id="aqOk">সেভ</button>`);
+  const i = sh.querySelector('#aqI'), ok = () => { cb(i.value.trim()); closeSheet(true); render(); };
+  sh.querySelector('#aqOk').onclick = ok; i.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); ok(); } });
+  setTimeout(() => i.focus(), 250);
+}
+/* ---- বাজেট এন্ট্রি শিট ---- */
+function budSheet(c, s0){
+  const subs = subsWithData(c, M); let i = Math.max(0, subs.indexOf(s0));
+  const sh = openSheet('<div id="bbx"></div>'), box = sh.querySelector('#bbx');
+  const subAct = (m, s) => S.txns.filter(t => t.c===c && t.s===s && ymOf(t.d)===m).reduce((a,t)=>a+t.a,0);
+  const draw = () => {
+    const s = subs[i], pv = addM(M,-1), pl = +(((S.budget[M]||{})[c]||{})[s]) || 0, ppl = +(((S.budget[pv]||{})[c]||{})[s]) || 0, pac = subAct(pv, s);
+    box.innerHTML = `${head(`🎯 ${esc(s)}`)}<div class="note" style="margin-top:-8px">${CATS[c].ic} ${CATS[c].bn} · ${mLabel(M)} এর বাজেট · ${i+1}/${subs.length}</div>
+    <div class="amt"><span>৳</span><input id="bA" inputmode="decimal" value="${pl||''}" placeholder="0" autocomplete="off"></div><div class="amthint" id="bAh"></div>
+    <div class="chips">${ppl?`<button type="button" class="chip" data-bq="${ppl}">গত মাসের বাজেট ${fmt(ppl)}</button>`:''}${pac?`<button type="button" class="chip" data-bq="${pac}">গত মাসের আসল ${fmt(pac)}</button>`:''}${pl?'<button type="button" class="chip" data-bq="0">০ (মুছুন)</button>':''}</div>
+    <div class="kv" style="margin-bottom:12px"><span>এই মাসে আসল খরচ/আয়</span><span>${fmt(subAct(M, s))}</span></div>
+    <div class="btns">${i < subs.length-1 ? '<button class="btn" id="bNext">সেভ + পরের খাত →</button>' : ''}<button class="btn pri" id="bSave">সেভ</button></div>
+    <button class="link" style="width:100%" id="bHead">📋 এই খাতের তারিখভিত্তিক বিস্তারিত</button>`;
+    const inp = box.querySelector('#bA');
+    inp.addEventListener('input', () => { const r = evalAmt(inp.value); box.querySelector('#bAh').textContent = /[+\-*/]/.test(bnD(inp.value)) ? (isNaN(r) ? 'হিসাব ঠিক নেই' : '= ' + fmt(r)) : ''; });
+    inp.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); if(put() && i < subs.length-1){ i++; draw(); } else if(put()){ closeSheet(true); render(); } } });
+    box.querySelector('#bSave').onclick = () => { if(put()){ closeSheet(true); render(); toast('✅ বাজেট সেভ হয়েছে'); } };
+    const nx = box.querySelector('#bNext'); if(nx) nx.onclick = () => { if(put()){ i++; draw(); } };
+    box.querySelector('#bHead').onclick = () => { put(); headSheet(c, s); };
+    setTimeout(() => { inp.focus(); inp.select && inp.select(); }, 200);
+  };
+  const put = () => {
+    const s = subs[i], v = evalAmt(box.querySelector('#bA').value);
+    if(isNaN(v) || v < 0){ toast('সঠিক অঙ্ক লিখুন'); return false; }
+    S.budget[M] = S.budget[M] || {}; S.budget[M][c] = S.budget[M][c] || {};
+    if(v > 0) S.budget[M][c][s] = r2(v); else delete S.budget[M][c][s];
+    S.budget[M].u = now(); save(); return true;
+  };
+  box.addEventListener('click', e => { const b = e.target.closest('[data-bq]'); if(b){ box.querySelector('#bA').value = b.dataset.bq === '0' ? '' : b.dataset.bq; } });
+  draw();
+}
+/* ---- ক্লাউড সিঙ্ক সংযোগ শিট ---- */
+function syncSheet(){
+  const ia = 'autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
+  const sh = openSheet(`${head('🔗 URL ও Key')}
+  <label class="fl">Apps Script Web App URL (…/exec দিয়ে শেষ)</label><input class="fi" id="sU" type="url" inputmode="url" ${ia} value="${esc(L.sync.url)}" placeholder="https://script.google.com/macros/s/.../exec">
+  <button class="mini" id="sPaste" style="margin:-4px 0 12px">📋 কপি করা URL পেস্ট করুন</button>
+  <label class="fl">Secret Key (কোডের SECRET এর সাথে হুবহু মিলতে হবে)</label><input class="fi" id="sK" type="text" ${ia} value="${esc(L.sync.key)}" placeholder="ধাপ ১-এ কোড কপি করলে নিজে থেকে তৈরি হয়">
+  <button class="btn pri" style="width:100%" id="sSave">✅ সেভ ও সংযোগ পরীক্ষা</button>`);
+  sh.querySelector('#sPaste').onclick = () => act('pasteUrl');
+  sh.querySelector('#sSave').onclick = () => {
+    L.sync.url = sh.querySelector('#sU').value.trim(); L.sync.key = sh.querySelector('#sK').value.trim(); saveL();
+    closeSheet(true); render();
+    if(L.sync.url && L.sync.key) testConn(); else toast('URL আর Key দুটোই দিন');
+  };
+}
+function testConn(){
+  if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(L.sync.url)) toast('URL টা script.google.com এর হওয়া উচিত');
+  setSync('busy'); toast('⏳ সংযোগ পরীক্ষা হচ্ছে...');
+  post({action:'ping'}).then(r => { toast(`✅ সংযোগ সফল! ক্লাউডে ${r.count}টি লেনদেন আছে`); setSync('ok'); if(TAB==='sync' && !$('#ov')) render(); sync(false); })
+    .catch(e => { setSync('err', e.message); toast('⚠️ ' + e.message); });
+}
+function errList(){ try{ return JSON.parse(localStorage.getItem('amar_hishab_err') || '[]'); }catch(e){ return []; } }
+function errCard(){ const l = errList(); if(!l.length) return '';
+  return `<div class="card" style="border-color:var(--red)"><h3>⚠️ সমস্যার লগ <small>${l.length}টি</small></h3><div class="note" style="max-height:140px;overflow:auto;font-size:11.5px">${l.slice().reverse().map(esc).join('<br>')}</div>
+  <div class="btns"><button class="btn" data-act="errCopy">📋 কপি</button><button class="btn" data-act="errClear">মুছুন</button></div></div>`; }
+
 /* ---- খাতভিত্তিক বিস্তারিত ---- */
 function headSheet(c, s, m0){
   let m = m0 || M;
@@ -1020,7 +1091,8 @@ function txForm(t, preset, psub){
     else if(D.acc){ acc = D.acc; drawBody(); }
     else if(D.from){ acc = D.from; if(to===acc) to = other(acc); drawBody(); }
     else if(D.to){ to = D.to; drawBody(); }
-    else if(D.new){ const n = (prompt(c==='lin' ? 'ঋণের নাম / কার কাছ থেকে নিলেন:' : 'নতুন খাতের নাম:')||'').trim(); if(!n) return; ensureSub(c,n); saveLocal(); s = n; sq = ''; drawBody(); }
+    else if(D.new){ const box = sh.querySelector('#fS'); b.outerHTML = `<span style="display:flex;gap:6px;width:100%"><input class="fi sm" id="fNewS" style="margin:0;flex:1" placeholder="${c==='lin'?'ঋণের নাম / কার কাছ থেকে':'নতুন খাতের নাম'}" autocomplete="off"><button type="button" class="mini gold" data-newok="1" style="background:var(--gold);color:#3a2800">যোগ</button></span>`; const ni = box.querySelector('#fNewS'); ni.focus(); ni.addEventListener('keydown', ev2 => { if(ev2.key==='Enter'){ ev2.preventDefault(); box.querySelector('[data-newok]').click(); } }); }
+    else if(D.newok){ const n = (sh.querySelector('#fNewS').value||'').trim(); if(!n){ toast('নাম লিখুন'); return; } ensureSub(c,n); saveLocal(); s = n; sq = ''; drawBody(); }
     else if(D.s !== undefined){ s = D.s; drawSubs(); }
   });
   const doSave = more => {
@@ -1144,12 +1216,13 @@ function accForm(ac){
 }
 function accFix(id){
   const ac = accById(id), cur = accBal(id, null);
-  const v = prompt(`${ac.name}-এ এখন আসলে কত টাকা আছে?\n(অ্যাপে দেখাচ্ছে: ${fmt(cur)})`); if(v===null) return;
-  const real = evalAmt(v); if(isNaN(real)){ toast('সঠিক অঙ্ক লিখুন'); return; }
+  askSheet(`⚖️ ${esc(ac.name)} মিলিয়ে নিন`, `এখন আসলে কত টাকা আছে? (অ্যাপে দেখাচ্ছে: ${fmt(cur)})`, '', v => {
+  if(!v) return; const real = evalAmt(v); if(isNaN(real)){ toast('সঠিক অঙ্ক লিখুন'); return; }
   const diff = r2(real - cur); if(!diff){ toast('✅ আগে থেকেই মিলে আছে'); return; }
   const c = diff > 0 ? 'inc' : 'exp', s = 'হিসাব সমন্বয়'; ensureSub(c, s);
   S.txns.push({id:uid(), d:today(), a:Math.abs(diff), c, s, n:'ব্যালেন্স মিলানো', acc:id, u:now()});
-  save(); render(); toast(`✅ ${fmt(Math.abs(diff))} ${diff>0?'যোগ':'বাদ'} করে মিলানো হয়েছে`);
+  save(); toast(`✅ ${fmt(Math.abs(diff))} ${diff>0?'যোগ':'বাদ'} করে মিলানো হয়েছে`);
+  }, 'যেমন: 5000', true);
 }
 /* ---- নির্দিষ্ট মাসিক ফর্ম ---- */
 function recForm(r){
@@ -1332,7 +1405,7 @@ function copyText(t, msg, onFail){
 /* ================= ডেটা টুলস ================= */
 function download(name, text, type){ const b = new Blob([text], {type}); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500); toast('⬇️ ডাউনলোড হচ্ছে'); }
 function exportCSV(list, name){
-  const q = v => '"' + String(v ?? '').replace(/"/g,'""') + '"';
+  const q = v => '"' + String((v == null ? '' : v)).replace(/"/g,'""') + '"';
   const rows = [['Date','Type','Subcategory','Account','To Account','Amount','Note'].join(',')].concat(sortTx(list).reverse().map(t => [t.d, q(CATS[t.c].bn), q(t.c==='trf'?'':t.s), q(accName(t.acc)), q(t.c==='trf'?accName(t.to):''), t.a, q(t.n)].join(',')));
   download(name, '﻿' + rows.join('\r\n'), 'text/csv;charset=utf-8');
 }
@@ -1385,7 +1458,7 @@ $('#btnSet').onclick = () => go('set');
 $('#btnSync').onclick = () => go('sync');
 $('#nav').onclick = e => { const b = e.target.closest('button[data-tab]'); if(!b) return; if(b.dataset.tab==='more') menuSheet(); else go(b.dataset.tab); };
 $('#view').addEventListener('click', e => {
-  const t = e.target.closest('[data-tx],[data-go],[data-act],[data-goal],[data-loan],[data-addsub],[data-f],[data-fa],[data-new],[data-recadd],[data-recedit],[data-accedit],[data-accfix],[data-theme],[data-sc],[data-ren],[data-dsub],[data-lin],[data-lpay],[data-head]');
+  const t = e.target.closest('[data-tx],[data-go],[data-act],[data-goal],[data-loan],[data-addsub],[data-f],[data-fa],[data-new],[data-recadd],[data-recedit],[data-accedit],[data-accfix],[data-theme],[data-sc],[data-ren],[data-dsub],[data-lin],[data-lpay],[data-head],[data-bud]');
   if(!t) return; const D = t.dataset;
   if(D.head) headSheet(D.head, D.hs);
   else if(D.tx){ const x = S.txns.find(y=>y.id===D.tx); if(x) txForm(x); }
@@ -1401,10 +1474,11 @@ $('#view').addEventListener('click', e => {
   else if(D.lpay){ const l = S.loans.find(x=>x.id===D.lpay); if(l){ txForm(null, 'debt', l.name); if(l.pay) setTimeout(() => { const a = $('#fA'); if(a && !a.value){ a.value = l.pay; } }, 50); } }
   else if(D.recedit) recForm(S.recs.find(r=>r.id===D.recedit));
   else if(D.recadd){ const r = S.recs.find(x=>x.id===D.recadd); if(r && !recDone(r,M)){ addRecTx(r,M); save(); buzz(); render(); toast('✅ যোগ হয়েছে'); } }
-  else if(D.addsub){ const c = D.addsub, n = (prompt('নতুন খাতের নাম:')||'').trim(); if(!n) return; if(S.subs[c].includes(n)){ toast('আগে থেকেই আছে'); return; } ensureSub(c,n); save(); render(); }
+  else if(D.addsub){ const c = D.addsub; askSheet('➕ নতুন খাত — ' + CATS[c].bn, 'খাতের নাম', '', n => { if(!n) return; if(S.subs[c].includes(n)){ toast('আগে থেকেই আছে'); return; } ensureSub(c,n); save(); }, 'যেমন: ফল-মূল'); }
+  else if(D.bud) budSheet(D.bud, D.bs);
   else if(D.theme){ L.theme = D.theme; saveL(); applyTheme(); render(); }
   else if(D.sc){ setCat = D.sc; render(); }
-  else if(D.ren){ const o = S.subs[setCat][+D.ren], n = (prompt('নতুন নাম:', o)||'').trim(); if(!n || n===o) return; if(renameSub(setCat,o,n)){ save(); render(); } }
+  else if(D.ren){ const o = S.subs[setCat][+D.ren]; askSheet('✏️ খাতের নাম বদলান', 'নতুন নাম', o, n => { if(!n || n===o) return; if(renameSub(setCat,o,n)) save(); }); }
   else if(D.dsub){ const Ls = S.subs[setCat], o = Ls[+D.dsub]; if(!confirm(`"${o}" খাতটি তালিকা থেকে সরাবেন? (পুরনো লেনদেন থাকবে)`)) return; Ls.splice(+D.dsub,1); S.subsU = now(); save(); render(); }
   else if(D.act) act(D.act);
 });
@@ -1429,19 +1503,16 @@ function act(a){
     case 'wipe': wipeAll(); break;
     case 'pin': pinSetup(); break;
     case 'syncNow': sync(true); break;
-    case 'syncSave': {
-      L.sync.url = $('#syU').value.trim(); L.sync.key = $('#syK').value.trim(); L.sync.auto = $('#syA').checked; saveL();
-      if(!L.sync.url || !L.sync.key){ setSync('idle'); render(); toast(L.sync.key ? '✅ Key সেভ হয়েছে — এবার কোড কপি করে সেটআপ করুন' : 'URL আর Secret Key দুটোই দিন'); return; }
-      if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(L.sync.url)) toast('URL টা script.google.com এর হওয়া উচিত');
-      setSync('busy'); toast('⏳ সংযোগ পরীক্ষা হচ্ছে...');
-      post({action:'ping'}).then(r => { toast(`✅ সংযোগ সফল! ক্লাউডে ${r.count}টি লেনদেন আছে`); setSync('ok'); if(TAB==='sync') render(); sync(false); })
-        .catch(e => { setSync('err', e.message); toast('⚠️ ' + e.message); });
-      break; }
+    case 'syncEdit': syncSheet(); break;
+    case 'syncTest': testConn(); break;
+    case 'name': askSheet('👤 আপনার নাম', 'নাম (রিপোর্টে ও শুভেচ্ছায় দেখাবে)', L.name, v => { L.name = v; saveL(); toast('✅ সেভ হয়েছে'); }, 'যেমন: ফরিদ'); break;
+    case 'errClear': try{ localStorage.removeItem('amar_hishab_err'); }catch(e){} render(); break;
+    case 'errCopy': copyText(errList().join('\n'), '📋 কপি হয়েছে — Claude-কে পাঠিয়ে দিন'); break;
     case 'copyGas': ensureKey(); copyText(gasCode(), '📋 কোড কপি হয়েছে — এবার script.google.com-এ পেস্ট করুন', viewGas); break;
     case 'shareGas': { ensureKey(); const t = gasCode(); if(navigator.share) navigator.share({title:'আমার হিসাব — Apps Script কোড', text:t}).catch(()=>{}); else copyText(t, '📋 কোড কপি হয়েছে', viewGas); break; }
     case 'dlGas': ensureKey(); download('AmarHishab_AppsScript.gs.txt', gasCode(), 'text/plain;charset=utf-8'); break;
     case 'viewGas': ensureKey(); viewGas(); break;
-    case 'pasteUrl': if(navigator.clipboard && navigator.clipboard.readText) navigator.clipboard.readText().then(t => { t = (t||'').trim(); if(!t){ toast('ক্লিপবোর্ড খালি'); return; } $('#syU').value = t; toast('✅ পেস্ট হয়েছে — এবার "সেভ ও সংযোগ পরীক্ষা" চাপুন'); }, () => toast('পেস্ট করা গেল না — ঘরে চেপে ধরে Paste করুন')); else toast('ঘরে চেপে ধরে Paste করুন'); break;
+    case 'pasteUrl': if(navigator.clipboard && navigator.clipboard.readText) navigator.clipboard.readText().then(t => { t = (t||'').trim(); if(!t){ toast('ক্লিপবোর্ড খালি'); return; } { const u = $('#sU'); if(u) u.value = t; } toast('✅ পেস্ট হয়েছে — এবার "সেভ ও সংযোগ পরীক্ষা" চাপুন'); }, () => toast('পেস্ট করা গেল না — ঘরে চেপে ধরে Paste করুন')); else toast('ঘরে চেপে ধরে Paste করুন'); break;
     case 'install': if(installEvt){ installEvt.prompt(); installEvt.userChoice.finally(() => { installEvt = null; render(); }); } break;
     case 'forcePull': forcePull(); break;
     case 'forcePush': forcePush(); break;
@@ -1452,6 +1523,7 @@ $('#view').addEventListener('change', e => {
   const el = e.target;
   if(el.id==='stName'){ L.name = el.value.trim(); saveL(); toast('✅ সেভ হয়েছে'); }
   else if(el.id==='stHide'){ L.hide = el.checked; saveL(); applyTheme(); }
+  else if(el.id==='syA'){ L.sync.auto = el.checked; saveL(); toast(el.checked ? 'অটো সিঙ্ক চালু' : 'অটো সিঙ্ক বন্ধ'); }
   else if(el.classList.contains('bin')){
     const c = el.dataset.c, s = el.dataset.s, v = num(el.value);
     S.budget[M] = S.budget[M] || {}; S.budget[M][c] = S.budget[M][c] || {};
